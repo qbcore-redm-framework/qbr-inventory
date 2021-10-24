@@ -852,7 +852,7 @@ end
 -- Stash Items
 function GetStashItems(stashId)
 	local items = {}
-	local result = exports.oxmysql:fetchSync('SELECT items FROM stashitems WHERE stash = ?', {stashId})
+	local result = exports.oxmysql:executeSync('SELECT items FROM stashitems WHERE stash = ?', {stashId})
 	if result[1] ~= nil then 
 		if result[1].items ~= nil then
 			result[1].items = json.decode(result[1].items)
@@ -985,7 +985,7 @@ end
 -- Trunk items
 function GetOwnedVehicleItems(plate)
 	local items = {}
-	local result = exports.oxmysql:fetchSync('SELECT items FROM trunkitems WHERE plate = ?', {plate})
+	local result = exports.oxmysql:executeSync('SELECT items FROM trunkitems WHERE plate = ?', {plate})
 	if result[1] ~= nil then
 		if result[1].items ~= nil then
 			result[1].items = json.decode(result[1].items)
@@ -1106,7 +1106,7 @@ end
 -- Glovebox items
 function GetOwnedVehicleGloveboxItems(plate)
 	local items = {}
-	local result = exports.oxmysql:fetchSync('SELECT items FROM gloveboxitems WHERE plate = ?', {plate})
+	local result = exports.oxmysql:executeSync('SELECT items FROM gloveboxitems WHERE plate = ?', {plate})
 	if result[1] ~= nil then 
 		if result[1].items ~= nil then
 			result[1].items = json.decode(result[1].items)
