@@ -6,7 +6,8 @@ description 'QBR-Inventory'
 version '1.0.0'
 
 shared_scripts {
-	'config.lua'
+	'config.lua',
+	-- '@qbr-weapons/config.lua'
 }
 
 server_script 'server/main.lua'
@@ -26,3 +27,5 @@ files {
 	'html/attachment_images/*.png',
 	'html/*.ttf'
 }
+
+-- dependency 'qbr-weapons'
