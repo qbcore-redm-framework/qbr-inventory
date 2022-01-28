@@ -770,7 +770,7 @@ CreateThread(function()
         DisableControlAction(0, 0x1CE6D9EB)
         DisableControlAction(0, 0x8F9F9E58)
         DisableControlAction(0, 0xAB62E997)
-        DisableControlAction(0, 0xA1FDE2A6)
+        DisableControlAction(0, 0x26E9DC00)
         if IsDisabledControlPressed(0, 0xE6F612E4) and IsInputDisabled(0) then  -- 1  slot
 			if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
 				TriggerServerEvent("inventory:server:UseItemSlot", 1)
@@ -801,7 +801,7 @@ CreateThread(function()
 			end
         end
 
-        if IsDisabledControlPressed(0, 0xA1FDE2A6) and IsInputDisabled(0) then -- 6  Hotbar
+        if IsDisabledControlPressed(0, 0x26E9DC00) and IsInputDisabled(0) then -- z  Hotbar
             isHotbar = not isHotbar
             ToggleHotbar(isHotbar)
         end
