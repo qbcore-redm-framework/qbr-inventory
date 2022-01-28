@@ -1,28 +1,5 @@
 Config = {}
 
-local StringCharset = {}
-local NumberCharset = {}
-
-for i = 48,  57 do table.insert(NumberCharset, string.char(i)) end
-for i = 65,  90 do table.insert(StringCharset, string.char(i)) end
-for i = 97, 122 do table.insert(StringCharset, string.char(i)) end
-
-Config.RandomStr = function(length)
-	if length > 0 then
-		return Config.RandomStr(length-1) .. StringCharset[math.random(1, #StringCharset)]
-	else
-		return ''
-	end
-end
-
-Config.RandomInt = function(length)
-	if length > 0 then
-		return Config.RandomInt(length-1) .. NumberCharset[math.random(1, #NumberCharset)]
-	else
-		return ''
-	end
-end
-
 Config.VendingObjects = {
     "prop_vend_soda_01",
     "prop_vend_soda_02",
@@ -32,6 +9,8 @@ Config.VendingObjects = {
 Config.BinObjects = {
     "prop_bin_05a",
 }
+
+Config.CraftingObject = `prop_toolchest_05`
 
 Config.VendingItem = {
     [1] = {
@@ -81,8 +60,9 @@ Config.CraftingItems = {
     },
 }
 
+Config.AttachmentCraftingLocation = vector3(88.91, 3743.88, 40.77)
+
 Config.AttachmentCrafting = {
-    ["location"] = {x = 88.91, y = 3743.88, z = 40.77, h = 66.5, r = 1.0}, 
     ["items"] = {
         [1] = {
             name = "pistol_extendedclip",
@@ -204,42 +184,44 @@ Config.AttachmentCrafting = {
 MaxInventorySlots = 41
 
 BackEngineVehicles = {
-    'ninef',
-    'adder',
-    'vagner',
-    't20',
-    'infernus',
-    'zentorno',
-    'reaper',
-    'comet2',
-    'comet3',
-    'jester',
-    'jester2',
-    'cheetah',
-    'cheetah2',
-    'prototipo',
-    'turismor',
-    'pfister811',
-    'ardent',
-    'nero',
-    'nero2',
-    'tempesta',
-    'vacca',
-    'bullet',
-    'osiris',
-    'entityxf',
-    'turismo2',
-    'fmj',
-    're7b',
-    'tyrus',
-    'italigtb',
-    'penetrator',
-    'monroe',
-    'ninef2',
-    'stingergt',
-    'surfer',
-    'surfer2',
-    'comet3',
+    [`ninef`] = true,
+    [`adder`] = true,
+    [`vagner`] = true,
+    [`t20`] = true,
+    [`infernus`] = true,
+    [`zentorno`] = true,
+    [`reaper`] = true,
+    [`comet2`] = true,
+    [`comet3`] = true,
+    [`jester`] = true,
+    [`jester2`] = true,
+    [`cheetah`] = true,
+    [`cheetah2`] = true,
+    [`prototipo`] = true,
+    [`turismor`] = true,
+    [`pfister811`] = true,
+    [`ardent`] = true,
+    [`nero`] = true,
+    [`nero2`] = true,
+    [`tempesta`] = true,
+    [`vacca`] = true,
+    [`bullet`] = true,
+    [`osiris`] = true,
+    [`entityxf`] = true,
+    [`turismo2`] = true,
+    [`fmj`] = true,
+    [`re7b`] = true,
+    [`tyrus`] = true,
+    [`italigtb`] = true,
+    [`penetrator`] = true,
+    [`monroe`] = true,
+    [`ninef2`] = true,
+    [`stingergt`] = true,
+    [`surfer`] = true,
+    [`surfer2`] = true,
+    [`gp1`] = true,
+    [`autarch`] = true,
+    [`tyrant`] = true
 }
 
 Config.MaximumAmmoValues = {
