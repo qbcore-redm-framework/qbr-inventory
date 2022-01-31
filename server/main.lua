@@ -1510,6 +1510,7 @@ QBCore.Commands.Add("giveitem", "Give An Item (Admin Only)", {{name="id", help="
 
 				if Player.Functions.AddItem(itemData["name"], amount, false, info) then
 					TriggerClientEvent('QBCore:Notify', source, "You Have Given " ..GetPlayerName(tonumber(args[1])).." "..amount.." "..itemData["name"].. "", "success")
+					TriggerClientEvent('inventory:client:ItemBox', tonumber(args[1]), QBCore.Shared.Items[itemData["name"]], 'add')
 				else
 					TriggerClientEvent('QBCore:Notify', source,  "Can't give item!", "error")
 				end
