@@ -34,7 +34,7 @@ Config.VendingItem = {
 Config.CraftingItems = {
     [1] = {
         name = "lockpick",
-        amount = 50,
+        amount = 20,
         info = {},
         costs = {
             ["metalscrap"] = 20,
@@ -47,7 +47,7 @@ Config.CraftingItems = {
     },
     [2] = {
         name = "coffee",
-        amount = 1,
+        amount = 20,
         info = {},
         costs = {
             ["coffeeseeds"] = 20,
