@@ -6,6 +6,8 @@ description 'QBR-Inventory'
 version '1.0.0'
 
 shared_scripts {
+	'@qbr-core/shared/locale.lua',
+   	'locales/en.lua',	
 	'config.lua',
 	-- '@qbr-weapons/config.lua'
 }
