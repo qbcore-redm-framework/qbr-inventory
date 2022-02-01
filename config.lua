@@ -51,7 +51,7 @@ Config.CraftingItems = {
         info = {},
         costs = {
             ["coffeeseeds"] = 20,
-            ["water"] = 20,
+            ["water_bottle"] = 20,
         },
         type = "item",
         slot = 2,
