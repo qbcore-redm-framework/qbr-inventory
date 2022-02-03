@@ -144,7 +144,7 @@ end
 local function ItemsToItemInfo()
 	itemInfos = {
 		[1] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 20x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 20x."},
-		[2] = {costs = QBCore.Shared.Items["coffeeseeds"]["label"] .. ": 20x, " ..QBCore.Shared.Items["water"]["label"] .. ": 20x."},
+		[2] = {costs = QBCore.Shared.Items["coffeeseeds"]["label"] .. ": 20x, " ..QBCore.Shared.Items["water_bottle"]["label"] .. ": 20x."},
 	}
 
 	local items = {}
