@@ -336,7 +336,7 @@ RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, am
         action = "close",
     })
     isCrafting = true
-    QBCore.Functions.Progressbar("repair_vehicle", "Crafting..", (math.random(2000, 5000) * amount), false, true, {
+    QBCore.Functions.Progressbar("repair_vehicle", Lang:t("info.crafting_progress"), (math.random(2000, 5000) * amount), false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -352,7 +352,7 @@ RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, am
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify("Failed", "error")
+        QBCore.Functions.Notify(Lang:t("error.failed"), "error")
         isCrafting = false
 	end)
 end)
@@ -363,7 +363,7 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
         action = "close",
     })
     isCrafting = true
-    QBCore.Functions.Progressbar("repair_vehicle", "Crafting..", (math.random(2000, 5000) * amount), false, true, {
+    QBCore.Functions.Progressbar("repair_vehicle", Lang:t("info.crafting_progress"), (math.random(2000, 5000) * amount), false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -379,7 +379,7 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify("Failed", "error")
+        QBCore.Functions.Notify(Lang:t("error.failed"), "error")
         isCrafting = false
 	end)
 end)
@@ -388,7 +388,7 @@ RegisterNetEvent('inventory:client:PickupSnowballs', function()
     local ped = PlayerPedId()
     LoadAnimDict('anim@mp_snowball')
     TaskPlayAnim(ped, 'anim@mp_snowball', 'pickup_snowball', 3.0, 3.0, -1, 0, 1, 0, 0, 0)
-    QBCore.Functions.Progressbar("pickupsnowball", "Collecting snowballs..", 1500, false, true, {
+    QBCore.Functions.Progressbar("pickupsnowball", Lang:t("info.pickup_snow"), 1500, false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
@@ -399,7 +399,7 @@ RegisterNetEvent('inventory:client:PickupSnowballs', function()
         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
     end, function() -- Cancel
         ClearPedTasks(ped)
-        QBCore.Functions.Notify("Canceled", "error")
+        QBCore.Functions.Notify(Lang:t("error.failed"), "error")
     end)
 end)
 
@@ -663,7 +663,7 @@ CreateThread(function()
 									curVeh = vehicle
 									CurrentGlovebox = nil
 								else
-									QBCore.Functions.Notify("Vehicle is locked..", "error")
+									QBCore.Functions.Notify(Lang:t("error.veh_locked"), "error")
 									return
 								end
 							else
@@ -906,7 +906,7 @@ RegisterNUICallback('combineWithAnim', function(data)
         TriggerServerEvent('inventory:server:combineItem', combineData.reward, data.requiredItem, data.usedItem)
     end, function() -- Cancel
         StopAnimTask(ped, aDict, aLib, 1.0)
-        QBCore.Functions.Notify("Failed!", "error")
+        QBCore.Functions.Notify(Lang:t("error.failed"), "error")
     end)
 end)
 
@@ -930,10 +930,10 @@ RegisterNUICallback("GiveItem", function(data)
             SetCurrentPedWeapon(PlayerPedId(),'WEAPON_UNARMED',true)
             TriggerServerEvent("inventory:server:GiveItem", playerId, data.inventory, data.item, data.amount)
         else
-            QBCore.Functions.Notify("You do not own this item!", "error")
+            QBCore.Functions.Notify(Lang:t("error.not_owned"), "error")
         end
     else
-        QBCore.Functions.Notify("No one nearby!", "error")
+        QBCore.Functions.Notify(Lang:t("error.no_near"), "error")
     end
 end)
 
@@ -1018,10 +1018,10 @@ CreateThread(function()
                 local objectPos = GetEntityCoords(craftObject)
                 if #(pos - objectPos) < 1.5 then
                     sleep = 0
-                    DrawText3Ds(objectPos.x, objectPos.y, objectPos.z + 1.0, "~g~E~w~ - Craft")
+                    DrawText3Ds(objectPos.x, objectPos.y, objectPos.z + 1.0, "~d~E~s~ - "..Lang:t("info.craft"))
                     if IsControlJustReleased(0, 0xCEFD9220) then
                         local crafting = {}
-                        crafting.label = "Crafting"
+                        crafting.label = Lang:t("info.craft_label")
                         crafting.items = GetThresholdItems()
                         TriggerServerEvent("inventory:server:OpenInventory", "crafting", math.random(1, 99), crafting)
                         sleep = 100
@@ -1042,10 +1042,10 @@ CreateThread(function()
 		if distance < 10 then
 			inRange = true
 			if distance < 1.5 then
-				DrawText3Ds(Config.AttachmentCraftingLocation.x, Config.AttachmentCraftingLocation.y, Config.AttachmentCraftingLocation.z, "~g~E~w~ - Craft")
+				DrawText3Ds(Config.AttachmentCraftingLocation.x, Config.AttachmentCraftingLocation.y, Config.AttachmentCraftingLocation.z, "~d~E~s~ - "..Lang:t("info.craft"))
 				if IsControlJustPressed(0, 0xCEFD9220) then
 					local crafting = {}
-					crafting.label = "Attachment Crafting"
+					crafting.label = Lang:t("info.attatch_label")
 					crafting.items = GetAttachmentThresholdItems()
 					TriggerServerEvent("inventory:server:OpenInventory", "attachment_crafting", math.random(1, 99), crafting)
 				end
