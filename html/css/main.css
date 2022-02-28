@@ -1,4 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap'); */
+
+@font-face {
+	font-family: 'RDR Lino';
+	src: url('../fonts/RDRLino-Regular.eot');
+	src: url('../fonts/RDRLino-Regular.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/RDRLino-Regular.woff2') format('woff2'),
+		url('../fonts/RDRLino-Regular.woff') format('woff'),
+		url('../fonts/RDRLino-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Hapna Slab Serif';
+	src: url('../fonts/HapnaSlabSerif-DemiBold.eot');
+	src: url('../fonts/HapnaSlabSerif-DemiBold.eot?#iefix')
+			format('embedded-opentype'),
+		url('../fonts/HapnaSlabSerif-DemiBold.woff2') format('woff2'),
+		url('../fonts/HapnaSlabSerif-DemiBold.woff') format('woff'),
+		url('../fonts/HapnaSlabSerif-DemiBold.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+}
 
 p {
 	margin: 0 !important;
@@ -8,8 +31,8 @@ p {
 	--main-label-color: 0, 0, 0;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
@@ -56,10 +79,16 @@ body {
 	left: 14.2%;
 	width: 28%;
 	height: 47.16%;
+	padding: 4rem;
+	padding-right: 0;
 	float: left;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	z-index: 100;
+	background-image: url('https://imagedelivery.net/3ecvmLCFkS-FijMWb0qFvQ/9449fbdb-cc28-4787-f7ee-22c3be336000/public');
+	background-size: 100% 100%;
+	background-position: left;
+	background-repeat: no-repeat;
 }
 
 .other-inventory {
@@ -68,10 +97,16 @@ body {
 	right: 16%;
 	width: 28%;
 	height: 47.16%;
+	padding: 4rem;
+	padding-right: 0;
 	float: left;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	z-index: 100;
+	background-image: url('https://imagedelivery.net/3ecvmLCFkS-FijMWb0qFvQ/9449fbdb-cc28-4787-f7ee-22c3be336000/public');
+	background-size: 100% 100%;
+	background-position: left;
+	background-repeat: no-repeat;
 }
 
 .ply-hotbar-inventory {
@@ -81,16 +116,16 @@ body {
 	z-index: 105;
 }
 
-.player-inventory>.item-slot>.item-slot-key>p {
+.player-inventory > .item-slot > .item-slot-key > p {
 	position: absolute;
 	font-weight: bolder;
 	color: white;
-	padding: .3vh;
-	padding-left: .5vh;
+	padding: 0.3vh;
+	padding-left: 0.5vh;
 	text-align: left;
 	font-size: 1.1vh;
 	line-height: 1.8vh;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 .inv-options {
@@ -118,20 +153,23 @@ body {
 	height: 11.5vh;
 	float: left;
 	background-color: rgba(0, 0, 0, 0.3);
-	border: 1px solid rgb(68 68 68 / 40%);
+	/* background-image: url('https://imagedelivery.net/3ecvmLCFkS-FijMWb0qFvQ/4dead996-c6b2-4085-793e-91a66dcb7500/public');
+	background-size: 100% 100%;
+	background-position: center; */
+	border: 1px solid rgba(129, 129, 129, 0.4);
 	margin: 2px;
 	transition: opacity 0.2s;
-	opacity: 1.0;
+	opacity: 1;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
 
 .item-slot-hoverClass {
-	opacity: .6;
+	opacity: 1;
 }
 
 .item-slot:hover {
-	opacity: .7;
+	opacity: 0.7;
 }
 
 .inv-option-item {
@@ -139,9 +177,9 @@ body {
 }
 
 .btn-inv {
-	width: 100%!important;
-	max-width: 100%!important;
-	padding: 10%!important;
+	width: 100% !important;
+	max-width: 100% !important;
+	padding: 10% !important;
 	background-color: rgba(235, 235, 235, 0);
 }
 
@@ -149,7 +187,7 @@ body {
 	color: white;
 	text-align: center;
 	font-size: 1.25vh;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	outline: none;
 }
 
@@ -168,23 +206,23 @@ body {
 .ammo-info-header {
 	width: 100%;
 	color: white;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	background-color: rgba(0, 0, 0, 0.192);
-	font-size: 1.vh;
-	padding: .4vh;
+	font-size: 1vh;
+	padding: 0.4vh;
 	text-align: center;
 }
 
 .ammo-info {
 	position: relative;
 	color: white;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	font-weight: 200;
-	font-size: 1.vh;
-	margin-left: .8vh;
-	margin-top: .4vh;
-	margin-bottom: .25vh;
-	top: .6vh;
+	font-size: 1vh;
+	margin-left: 0.8vh;
+	margin-top: 0.4vh;
+	margin-bottom: 0.25vh;
+	top: 0.6vh;
 }
 
 .ammo-info span {
@@ -192,7 +230,7 @@ body {
 	float: right;
 }
 
-.inv-option-item>p {
+.inv-option-item > p {
 	color: white;
 	text-align: center;
 	line-height: 48px;
@@ -200,16 +238,16 @@ body {
 	font-size: 1.2vh;
 	font-weight: 900;
 	background-color: rgba(220, 20, 60, 0.6);
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 .inv-option-item {
 	width: 75%;
 	height: 50px;
 	background-color: rgb(0 0 0 / 30%);
-	border: 1px solid rgba(255, 255, 255, .01);
+	border: 1px solid rgba(255, 255, 255, 0.01);
 	color: white;
-	transition: background-color .1s linear;
+	transition: background-color 0.1s linear;
 }
 
 .inv-option-item:hover {
@@ -222,24 +260,24 @@ body {
 	width: 78%;
 	left: 2px;
 	color: white;
-	border: 1px solid rgba(255, 255, 255, .01);
+	border: 1px solid rgba(255, 255, 255, 0.01);
 	background-color: rgba(220, 20, 60, 0.6);
 	text-align: center;
 	line-height: 48px;
 	text-transform: uppercase;
 	font-size: 1.2vh;
-	transition: background-color .1s linear;
+	transition: background-color 0.1s linear;
 	font-weight: 900;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
-.btn-combine>p {
+.btn-combine > p {
 	color: white;
 	text-align: center;
 	line-height: 48px;
 	text-transform: uppercase;
 	font-size: 1.1vh;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	background-color: rgb(0 0 0 / 20%);
 }
 
@@ -249,10 +287,11 @@ body {
 	right: 0.2vw;
 }
 
-.item-slot-amount>p {
+.item-slot-amount > p {
 	color: #ffffff;
 	text-align: right;
 	font-size: 0.8vh;
+	font-family: 'RDR Lino';
 }
 
 .item-slot-label {
@@ -262,9 +301,12 @@ body {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 	background-color: rgba(var(--main-label-color), 0.7);
+	background-image: url('https://imagedelivery.net/3ecvmLCFkS-FijMWb0qFvQ/0f7fdaf2-04e6-48b4-90f9-85e0dde7f900/public');
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
 }
 
-.item-slot-label>p {
+.item-slot-label > p {
 	text-transform: uppercase;
 	font-weight: 900;
 	color: white;
@@ -272,14 +314,14 @@ body {
 	padding: 3px;
 	text-align: center;
 	letter-spacing: 1px;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 .item-slot-quality {
 	position: absolute;
 	bottom: 1.7vh;
 	width: 100%;
-	height: .3vh;
+	height: 0.3vh;
 	background-color: rgba(32, 6, 6, 0.15);
 }
 
@@ -313,7 +355,8 @@ body {
 }
 
 .ui-draggable-dragging {
-	background: rgba(0, 0, 0, 0.3);
+	background: rgba(0, 0, 0, 1);
+	z-index: 9999;
 }
 
 .player-inv-info {
@@ -327,7 +370,7 @@ body {
 	color: white;
 	font-size: 16px;
 	font-style: italic;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	font-weight: bold;
 	letter-spacing: 0.2vh;
 	bottom: 0px;
@@ -339,7 +382,7 @@ body {
 	color: white;
 	font-size: 12px;
 	font-weight: 900;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	letter-spacing: 0.2vh;
 	float: left;
 }
@@ -349,7 +392,7 @@ body {
 	color: white;
 	font-size: 16px;
 	font-style: italic;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	font-weight: bold;
 	letter-spacing: 0.2vh;
 	bottom: 0px;
@@ -361,7 +404,7 @@ body {
 	color: white;
 	font-size: 12px;
 	font-weight: 900;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	letter-spacing: 0.2vh;
 	float: left;
 }
@@ -372,10 +415,10 @@ body {
 	top: 12%;
 }
 
-.player-inv-weight>p {
+.player-inv-weight > p {
 	color: white;
 	font-size: 12px;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 .other-inv-info {
@@ -385,7 +428,7 @@ body {
 }
 
 .ply-iteminfo-container {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	display: none;
 	position: absolute;
 	bottom: 3%;
@@ -400,7 +443,7 @@ body {
 .item-info-title {
 	text-transform: uppercase;
 	font-weight: 900;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	font-size: 1.3vh;
 	color: white;
 	padding-top: 1px;
@@ -408,7 +451,7 @@ body {
 
 .item-info-line {
 	position: absolute;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	width: 100%;
 	background-color: white;
 	height: 0vh;
@@ -417,9 +460,9 @@ body {
 .item-info-description {
 	text-transform: uppercase;
 	font-size: 1vh;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	color: white;
-	padding-top: .5vh;
+	padding-top: 0.5vh;
 }
 
 .itemboxes-container {
@@ -460,9 +503,9 @@ body {
 	left: 0;
 }
 
-#itembox-action>p {
+#itembox-action > p {
 	font-size: 10px;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 #itembox-label {
@@ -474,7 +517,7 @@ body {
 	height: fit-content;
 }
 
-#itembox-label>p {
+#itembox-label > p {
 	color: #ffffff;
 	font-size: 11px;
 	text-align: center;
@@ -510,7 +553,7 @@ body {
 	color: white;
 	padding: 3px;
 	font-size: 10px;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 #requiredItem-label {
@@ -521,7 +564,7 @@ body {
 	height: 2.6vh;
 }
 
-#requiredItem-label>p {
+#requiredItem-label > p {
 	color: #ffffff;
 	font-size: 11px;
 	text-align: center;
@@ -540,17 +583,17 @@ body {
 	z-index: 105;
 }
 
-.z-hotbar-inventory>.z-hotbar-item-slot>.z-hotbar-item-slot-key>p {
+.z-hotbar-inventory > .z-hotbar-item-slot > .z-hotbar-item-slot-key > p {
 	position: absolute;
 	color: #ffffff;
 	border-top-left-radius: 1px;
-	padding: .3vh;
-	padding-left: .5vh;
-	padding-right: .5vh;
+	padding: 0.3vh;
+	padding-left: 0.5vh;
+	padding-right: 0.5vh;
 	text-align: left;
 	font-size: 1.1vh;
 	line-height: 1.8vh;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 .z-hotbar-item-slot {
@@ -563,7 +606,7 @@ body {
 	border: 1px solid rgb(68 68 68 / 40%);
 	margin: 3px;
 	transition: opacity 0.2s;
-	opacity: 1.0;
+	opacity: 1;
 	background-color: rgba(0, 0, 0, 0.3);
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -575,7 +618,7 @@ body {
 	right: 0.3vw;
 }
 
-.z-hotbar-item-slot-amount>p {
+.z-hotbar-item-slot-amount > p {
 	color: #ffffff;
 	text-align: right;
 	font-size: 10px;
@@ -590,12 +633,12 @@ body {
 	height: fit-content;
 }
 
-.z-hotbar-item-slot-label>p {
+.z-hotbar-item-slot-label > p {
 	color: rgb(247, 247, 247);
 	font-size: 11.5px;
 	text-align: center;
 	text-transform: lowercase;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	font-variant: small-caps;
 }
 
@@ -633,7 +676,7 @@ body {
 	color: rgba(216, 216, 216, 0.897);
 }
 
-.ammo-container-header>i {
+.ammo-container-header > i {
 	line-height: 5vh;
 	font-size: 1.8vh;
 }
@@ -643,27 +686,27 @@ body {
 	width: 100%;
 	height: 6vh;
 	top: 5vh;
-	background-color: rgba(0, 0, 0, .4);
-	margin-bottom: .5vh;
-	margin-top: .5vh;
+	background-color: rgba(0, 0, 0, 0.4);
+	margin-bottom: 0.5vh;
+	margin-top: 0.5vh;
 }
 
-.ammo-box>img {
+.ammo-box > img {
 	position: absolute;
-	top: .15vh;
-	left: .2vh;
+	top: 0.15vh;
+	left: 0.2vh;
 	width: 5.25vh;
-	opacity: .25;
+	opacity: 0.25;
 }
 
-.ammo-box>span {
+.ammo-box > span {
 	position: absolute;
 	color: rgba(255, 255, 255, 0.95);
-	font-size: .93vh;
+	font-size: 0.93vh;
 	bottom: 0;
 	right: 0;
-	margin: .3vh;
-	font-family: 'Poppins', sans-serif;
+	margin: 0.3vh;
+	font-family: 'RDR Lino';
 }
 
 .ammo-box-amount {
@@ -674,19 +717,19 @@ body {
 	max-height: 100%;
 }
 
-#pistol_ammo>.ammo-box-amount {
+#pistol_ammo > .ammo-box-amount {
 	height: 0%;
 }
 
-#smg_ammo>.ammo-box-amount {
+#smg_ammo > .ammo-box-amount {
 	height: 0%;
 }
 
-#shotgun_ammo>.ammo-box-amount {
+#shotgun_ammo > .ammo-box-amount {
 	height: 0%;
 }
 
-#rifle_ammo>.ammo-box-amount {
+#rifle_ammo > .ammo-box-amount {
 	height: 0%;
 }
 
@@ -705,7 +748,7 @@ body {
 	margin: 5vh;
 	font-size: 3vh;
 	color: rgb(255, 255, 255);
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 .weapon-attachments-container-description {
@@ -714,7 +757,7 @@ body {
 	top: 5vh;
 	font-size: 1.7vh;
 	color: rgba(255, 255, 255, 0.8);
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 .weapon-attachments-container-details {
@@ -723,7 +766,7 @@ body {
 	top: 9vh;
 	font-size: 1.4vh;
 	color: rgba(255, 255, 255, 0.8);
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 }
 
 .weapon-attachments-container-detail-durability {
@@ -763,8 +806,8 @@ body {
 	left: 0;
 	margin: 5vh;
 	color: rgba(255, 255, 255, 0.8);
-	font-family: 'Poppins', sans-serif;
-	font-size: 1.4vh
+	font-family: 'RDR Lino';
+	font-size: 1.4vh;
 }
 
 .weapon-attachment {
@@ -775,13 +818,13 @@ body {
 	border: 1px solid rgb(75, 75, 75);
 	margin-right: 1vh;
 	float: left;
-	transition: .05s linear;
+	transition: 0.05s linear;
 }
 
 .weapon-attachment:hover {
 	background-color: rgba(0, 0, 0, 0.4);
 	border: 1px solid rgb(29, 29, 29);
-	transition: .05s linear;
+	transition: 0.05s linear;
 }
 
 .weapon-attachment-label {
@@ -792,13 +835,13 @@ body {
 	padding: 2.1%;
 }
 
-.weapon-attachment-label>p {
+.weapon-attachment-label > p {
 	color: #ffffff;
 	font-size: 1.1vh;
 	text-align: center;
 	text-transform: uppercase;
 	line-height: 1.9vh;
-	font-family: 'Poppins', sans-serif;
+	font-family: 'RDR Lino';
 	font-weight: 100;
 }
 
@@ -808,7 +851,7 @@ body {
 	padding: 0.5vw;
 }
 
-.weapon-attachment-img>img {
+.weapon-attachment-img > img {
 	display: block;
 	position: relative;
 	margin: 0 auto;
@@ -832,14 +875,14 @@ body {
 	text-align: center;
 	color: white;
 	font-size: 2vh;
-	transition: background-color .05s linear;
+	transition: background-color 0.05s linear;
 }
 
 .weapon-attachments-remove:hover {
 	background-color: rgb(18, 18, 18);
 }
 
-.weapon-attachments-remove>i {
+.weapon-attachments-remove > i {
 	line-height: 6.5vh;
 }
 
@@ -848,7 +891,7 @@ body {
 }
 
 .weapon-dragging-class {
-	animation: ShakeEffect .75s;
+	animation: ShakeEffect 0.75s;
 	animation-iteration-count: infinite;
 }
 
@@ -900,8 +943,8 @@ body {
 	text-align: center;
 	line-height: 6vh;
 	color: white;
-	font-family: 'Poppins', sans-serif;
-	transition: .05s linear;
+	font-family: 'RDR Lino';
+	transition: 0.05s linear;
 }
 
 .weapon-attachments-back:hover {
