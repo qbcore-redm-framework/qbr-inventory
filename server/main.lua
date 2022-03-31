@@ -1,6 +1,6 @@
 -- Variables
 
-local QBCore = exports['qbr-core']:GetCoreObject()
+
 local Drops = {}
 local Trunks = {}
 local Gloveboxes = {}
@@ -20,7 +20,7 @@ local function recipeContains(recipe, fromItem)
 end
 
 local function hasCraftItems(source, CostItems, amount)
-	local Player = QBCore.Functions.GetPlayer(source)
+	local Player = exports['qbr-core']:GetPlayer(source)
 	for k, v in pairs(CostItems) do
 		if Player.Functions.GetItemByName(k) ~= nil then
 			if Player.Functions.GetItemByName(k).amount < (v * amount) then
@@ -487,7 +487,7 @@ local function CreateDropId()
 end
 
 local function CreateNewDrop(source, fromSlot, toSlot, itemAmount)
-	local Player = QBCore.Functions.GetPlayer(source)
+	local Player = exports['qbr-core']:GetPlayer(source)
 	local itemData = Player.Functions.GetItemBySlot(fromSlot)
 	local coords = GetEntityCoords(GetPlayerPed(source))
 	if Player.Functions.RemoveItem(itemData.name, itemAmount, itemData.slot) then
@@ -532,7 +532,7 @@ end)
 
 RegisterNetEvent('inventory:server:combineItem', function(item, fromItem, toItem)
 	local src = source
-	local ply = QBCore.Functions.GetPlayer(src)
+	local ply = exports['qbr-core']:GetPlayer(src)
 
 	-- Check that inputs are not nil
 	-- Most commonly when abusing this exploit, this values are left as
@@ -560,7 +560,7 @@ end)
 
 RegisterNetEvent('inventory:server:CraftItems', function(itemName, itemCosts, amount, toSlot, points)
 	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
+	local Player = exports['qbr-core']:GetPlayer(src)
 	local amount = tonumber(amount)
 	if itemName ~= nil and itemCosts ~= nil then
 		for k, v in pairs(itemCosts) do
@@ -574,7 +574,7 @@ end)
 
 RegisterNetEvent('inventory:server:CraftAttachment', function(itemName, itemCosts, amount, toSlot, points)
 	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
+	local Player = exports['qbr-core']:GetPlayer(src)
 	local amount = tonumber(amount)
 	if itemName ~= nil and itemCosts ~= nil then
 		for k, v in pairs(itemCosts) do
@@ -603,14 +603,14 @@ end)
 RegisterNetEvent('inventory:server:OpenInventory', function(name, id, other)
 	local src = source
 	local ply = Player(src)
-	local Player = QBCore.Functions.GetPlayer(src)
+	local Player = exports['qbr-core']:GetPlayer(src)
 	if not ply.state.inv_busy then
 		if name and id then
 			local secondInv = {}
 			if name == "stash" then
 				if Stashes[id] then
 					if Stashes[id].isOpen then
-						local Target = QBCore.Functions.GetPlayer(Stashes[id].isOpen)
+						local Target = exports['qbr-core']:GetPlayer(Stashes[id].isOpen)
 						if Target then
 							TriggerClientEvent('inventory:client:CheckOpenState', Stashes[id].isOpen, name, id, Stashes[id].label)
 						else
@@ -653,7 +653,7 @@ RegisterNetEvent('inventory:server:OpenInventory', function(name, id, other)
 			elseif name == "trunk" then
 				if Trunks[id] then
 					if Trunks[id].isOpen then
-						local Target = QBCore.Functions.GetPlayer(Trunks[id].isOpen)
+						local Target = exports['qbr-core']:GetPlayer(Trunks[id].isOpen)
 						if Target then
 							TriggerClientEvent('inventory:client:CheckOpenState', Trunks[id].isOpen, name, id, Trunks[id].label)
 						else
@@ -696,7 +696,7 @@ RegisterNetEvent('inventory:server:OpenInventory', function(name, id, other)
 			elseif name == "glovebox" then
 				if Gloveboxes[id] then
 					if Gloveboxes[id].isOpen then
-						local Target = QBCore.Functions.GetPlayer(Gloveboxes[id].isOpen)
+						local Target = exports['qbr-core']:GetPlayer(Gloveboxes[id].isOpen)
 						if Target then
 							TriggerClientEvent('inventory:client:CheckOpenState', Gloveboxes[id].isOpen, name, id, Gloveboxes[id].label)
 						else
@@ -761,7 +761,7 @@ RegisterNetEvent('inventory:server:OpenInventory', function(name, id, other)
 				secondInv.inventory = other.items
 				secondInv.slots = #other.items
 			elseif name == "otherplayer" then
-				local OtherPlayer = QBCore.Functions.GetPlayer(tonumber(id))
+				local OtherPlayer = exports['qbr-core']:GetPlayer(tonumber(id))
 				if OtherPlayer then
 					secondInv.name = "otherplayer-"..id
 					secondInv.label = "Player-"..id
@@ -777,7 +777,7 @@ RegisterNetEvent('inventory:server:OpenInventory', function(name, id, other)
 			else
 				if Drops[id] then
 					if Drops[id].isOpen then
-						local Target = QBCore.Functions.GetPlayer(Drops[id].isOpen)
+						local Target = exports['qbr-core']:GetPlayer(Drops[id].isOpen)
 						if Target then
 							TriggerClientEvent('inventory:client:CheckOpenState', Drops[id].isOpen, name, id, Drops[id].label)
 						else
@@ -838,7 +838,7 @@ end)
 
 RegisterNetEvent('inventory:server:UseItemSlot', function(slot)
 	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
+	local Player = exports['qbr-core']:GetPlayer(src)
 	local itemData = Player.Functions.GetItemBySlot(slot)
 	if itemData then
 		local itemInfo = QBCore.Shared.Items[itemData.name]
@@ -862,7 +862,7 @@ end)
 
 RegisterNetEvent('inventory:server:UseItem', function(inventory, item)
 	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
+	local Player = exports['qbr-core']:GetPlayer(src)
 	if inventory == "player" or inventory == "hotbar" then
 		local itemData = Player.Functions.GetItemBySlot(item.slot)
 		if itemData then
@@ -873,7 +873,7 @@ end)
 
 RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, toInventory, fromSlot, toSlot, fromAmount, toAmount)
 	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
+	local Player = exports['qbr-core']:GetPlayer(src)
 	fromSlot = tonumber(fromSlot)
 	toSlot = tonumber(toSlot)
 
@@ -903,7 +903,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
 			elseif QBCore.Shared.SplitStr(toInventory, "-")[1] == "otherplayer" then
 				local playerId = tonumber(QBCore.Shared.SplitStr(toInventory, "-")[2])
-				local OtherPlayer = QBCore.Functions.GetPlayer(playerId)
+				local OtherPlayer = exports['qbr-core']:GetPlayer(playerId)
 				local toItemData = OtherPlayer.PlayerData.items[toSlot]
 				Player.Functions.RemoveItem(fromItemData.name, fromAmount, fromSlot)
 				TriggerClientEvent("inventory:client:CheckWeapon", src, fromItemData.name)
@@ -1045,7 +1045,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 		end
 	elseif QBCore.Shared.SplitStr(fromInventory, "-")[1] == "otherplayer" then
 		local playerId = tonumber(QBCore.Shared.SplitStr(fromInventory, "-")[2])
-		local OtherPlayer = QBCore.Functions.GetPlayer(playerId)
+		local OtherPlayer = exports['qbr-core']:GetPlayer(playerId)
 		local fromItemData = OtherPlayer.PlayerData.items[fromSlot]
 		local fromAmount = tonumber(fromAmount) ~= nil and tonumber(fromAmount) or fromItemData.amount
 		if fromItemData ~= nil and fromItemData.amount >= fromAmount then
@@ -1412,8 +1412,8 @@ end)
 
 RegisterServerEvent("inventory:server:GiveItem", function(target, inventory, item, amount)
     local src = source
-    local Player = QBCore.Functions.GetPlayer(src)
-    local OtherPlayer = QBCore.Functions.GetPlayer(tonumber(target))
+    local Player = exports['qbr-core']:GetPlayer(src)
+    local OtherPlayer = exports['qbr-core']:GetPlayer(tonumber(target))
     local dist = #(GetEntityCoords(GetPlayerPed(src))-GetEntityCoords(GetPlayerPed(target)))
 	if Player == OtherPlayer then return TriggerClientEvent('QBCore:Notify', src, Lang:t("error.yourself")) end
 	if dist > 2 then return TriggerClientEvent('QBCore:Notify', src, Lang:t("error.toofar")) end
@@ -1445,7 +1445,7 @@ end)
 
 -- callback
 
-QBCore.Functions.CreateCallback('qbr-inventory:server:GetStashItems', function(source, cb, stashId)
+exports['qbr-core']:CreateCallback('qbr-inventory:server:GetStashItems', function(source, cb, stashId)
 	cb(GetStashItems(stashId))
 end)
 
@@ -1481,7 +1481,7 @@ QBCore.Commands.Add("rob", "Rob Player", {}, false, function(source, args)
 end)
 
 QBCore.Commands.Add("giveitem", "Give An Item (Admin Only)", {{name="id", help="Player ID"},{name="item", help="Name of the item (not a label)"}, {name="amount", help="Amount of items"}}, true, function(source, args)
-	local Player = QBCore.Functions.GetPlayer(tonumber(args[1]))
+	local Player = exports['qbr-core']:GetPlayer(tonumber(args[1]))
 	local amount = tonumber(args[3])
 	local itemData = QBCore.Shared.Items[tostring(args[2]):lower()]
 	if Player then
@@ -1527,7 +1527,7 @@ QBCore.Commands.Add("giveitem", "Give An Item (Admin Only)", {{name="id", help="
 end, "admin")
 
 QBCore.Commands.Add("randomitems", "Give Random Items (God Only)", {}, false, function(source, args)
-	local Player = QBCore.Functions.GetPlayer(source)
+	local Player = exports['qbr-core']:GetPlayer(source)
 	local filteredItems = {}
 	for k, v in pairs(QBCore.Shared.Items) do
 		if QBCore.Shared.Items[k]["type"] ~= "weapon" then
@@ -1549,18 +1549,18 @@ end, "god")
 
 -- item
 
-QBCore.Functions.CreateUseableItem("snowball", function(source, item)
-	local Player = QBCore.Functions.GetPlayer(source)
+exports['qbr-core']:CreateUseableItem("snowball", function(source, item)
+	local Player = exports['qbr-core']:GetPlayer(source)
 	local itemData = Player.Functions.GetItemBySlot(item.slot)
 	if Player.Functions.GetItemBySlot(item.slot) then
         TriggerClientEvent("inventory:client:UseSnowball", source, itemData.amount)
     end
 end)
 
-QBCore.Functions.CreateUseableItem("driver_license", function(source, item)
+exports['qbr-core']:CreateUseableItem("driver_license", function(source, item)
 	local PlayerPed = GetPlayerPed(source)
 	local PlayerCoords = GetEntityCoords(PlayerPed)
-	for k, v in pairs(QBCore.Functions.GetPlayers()) do
+	for k, v in pairs(exports['qbr-core']:GetPlayers()) do
 		local TargetPed = GetPlayerPed(v)
 		local dist = #(PlayerCoords - GetEntityCoords(TargetPed))
 		if dist < 3.0 then
@@ -1579,10 +1579,10 @@ QBCore.Functions.CreateUseableItem("driver_license", function(source, item)
 	end
 end)
 
-QBCore.Functions.CreateUseableItem("id_card", function(source, item)
+exports['qbr-core']:CreateUseableItem("id_card", function(source, item)
 	local PlayerPed = GetPlayerPed(source)
 	local PlayerCoords = GetEntityCoords(PlayerPed)
-	for k, v in pairs(QBCore.Functions.GetPlayers()) do
+	for k, v in pairs(exports['qbr-core']:GetPlayers()) do
 		local TargetPed = GetPlayerPed(v)
 		local dist = #(PlayerCoords - GetEntityCoords(TargetPed))
 		if dist < 3.0 then

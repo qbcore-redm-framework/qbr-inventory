@@ -1,7 +1,7 @@
 -- Variables
 
-local QBCore = exports['qbr-core']:GetCoreObject()
-local PlayerData = QBCore.Functions.GetPlayerData()
+
+local PlayerData = exports['qbr-core']:GetPlayerData()
 local inInventory = false
 local currentWeapon = nil
 local CurrentWeaponData = {}
@@ -72,7 +72,7 @@ local function IsBackEngine(vehModel)
 end
 
 local function OpenTrunk()
-    local vehicle = QBCore.Functions.GetClosestVehicle()
+    local vehicle = exports['qbr-core']:GetClosestVehicle()
     while (not HasAnimDictLoaded("amb@prop_human_bum_bin@idle_b")) do
         RequestAnimDict("amb@prop_human_bum_bin@idle_b")
         Wait(100)
@@ -86,7 +86,7 @@ local function OpenTrunk()
 end
 
 local function CloseTrunk()
-    local vehicle = QBCore.Functions.GetClosestVehicle()
+    local vehicle = exports['qbr-core']:GetClosestVehicle()
     while (not HasAnimDictLoaded("amb@prop_human_bum_bin@idle_b")) do
         RequestAnimDict("amb@prop_human_bum_bin@idle_b")
         Wait(100)
@@ -229,7 +229,7 @@ end
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     LocalPlayer.state:set("inv_busy", false, true)
-    PlayerData = QBCore.Functions.GetPlayerData()
+    PlayerData = exports['qbr-core']:GetPlayerData()
 end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
@@ -336,7 +336,7 @@ RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, am
         action = "close",
     })
     isCrafting = true
-    QBCore.Functions.Progressbar("repair_vehicle", Lang:t("info.crafting_progress"), (math.random(2000, 5000) * amount), false, true, {
+    exports['qbr-core']:Progressbar("repair_vehicle", Lang:t("info.crafting_progress"), (math.random(2000, 5000) * amount), false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -352,7 +352,7 @@ RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, am
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify(Lang:t("error.failed"), "error")
+        exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
         isCrafting = false
 	end)
 end)
@@ -363,7 +363,7 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
         action = "close",
     })
     isCrafting = true
-    QBCore.Functions.Progressbar("repair_vehicle", Lang:t("info.crafting_progress"), (math.random(2000, 5000) * amount), false, true, {
+    exports['qbr-core']:Progressbar("repair_vehicle", Lang:t("info.crafting_progress"), (math.random(2000, 5000) * amount), false, true, {
 		disableMovement = true,
 		disableCarMovement = true,
 		disableMouse = false,
@@ -379,7 +379,7 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify(Lang:t("error.failed"), "error")
+        exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
         isCrafting = false
 	end)
 end)
@@ -388,7 +388,7 @@ RegisterNetEvent('inventory:client:PickupSnowballs', function()
     local ped = PlayerPedId()
     LoadAnimDict('anim@mp_snowball')
     TaskPlayAnim(ped, 'anim@mp_snowball', 'pickup_snowball', 3.0, 3.0, -1, 0, 1, 0, 0, 0)
-    QBCore.Functions.Progressbar("pickupsnowball", Lang:t("info.pickup_snow"), 1500, false, true, {
+    exports['qbr-core']:Progressbar("pickupsnowball", Lang:t("info.pickup_snow"), 1500, false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
@@ -399,7 +399,7 @@ RegisterNetEvent('inventory:client:PickupSnowballs', function()
         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
     end, function() -- Cancel
         ClearPedTasks(ped)
-        QBCore.Functions.Notify(Lang:t("error.failed"), "error")
+        exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
     end)
 end)
 
@@ -504,11 +504,11 @@ end, false)
 
             -- if IsPedInAnyVehicle(ped) then -- Is Player In Vehicle
                 -- local vehicle = GetVehiclePedIsIn(ped, false)
-                -- CurrentGlovebox = QBCore.Functions.GetPlate(vehicle)
+                -- CurrentGlovebox = exports['qbr-core']:GetPlate(vehicle)
                 -- curVeh = vehicle
                 -- CurrentVehicle = nil
             -- else
-                -- local vehicle = QBCore.Functions.GetClosestVehicle()
+                -- local vehicle = exports['qbr-core']:GetClosestVehicle()
                 -- if vehicle ~= 0 and vehicle ~= nil then
                     -- local pos = GetEntityCoords(ped)
                     -- local trunkpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
@@ -517,11 +517,11 @@ end, false)
                     -- end
                     -- if #(pos - trunkpos) < 2.0 and not IsPedInAnyVehicle(ped) then
                         -- if GetVehicleDoorLockStatus(vehicle) < 2 then
-                            -- CurrentVehicle = QBCore.Functions.GetPlate(vehicle)
+                            -- CurrentVehicle = exports['qbr-core']:GetPlate(vehicle)
                             -- curVeh = vehicle
                             -- CurrentGlovebox = nil
                         -- else
-                            -- QBCore.Functions.Notify("Vehicle Locked", "error")
+                            -- exports['qbr-core']:Notify("Vehicle Locked", "error")
                             -- return
                         -- end
                     -- else
@@ -650,7 +650,7 @@ CreateThread(function()
 						curVeh = vehicle
 						CurrentVehicle = nil
 					else
-						local vehicle = QBCore.Functions.GetClosestVehicle()
+						local vehicle = exports['qbr-core']:GetClosestVehicle()
 						if vehicle ~= 0 and vehicle ~= nil then
 							local pos = GetEntityCoords(ped)
 							local trunkpos = GetOffsetFromEntityInWorldCoords(vehicle, 0, -2.5, 0)
@@ -663,7 +663,7 @@ CreateThread(function()
 									curVeh = vehicle
 									CurrentGlovebox = nil
 								else
-									QBCore.Functions.Notify(Lang:t("error.veh_locked"), "error")
+									exports['qbr-core']:Notify(Lang:t("error.veh_locked"), "error")
 									return
 								end
 							else
@@ -800,7 +800,7 @@ RegisterNUICallback('RobMoney', function(data)
 end)
 
 RegisterNUICallback('Notify', function(data)
-    QBCore.Functions.Notify(data.message, data.type)
+    exports['qbr-core']:Notify(data.message, data.type)
 end)
 
 RegisterNUICallback('GetWeaponData', function(data, cb)
@@ -816,7 +816,7 @@ RegisterNUICallback('RemoveAttachment', function(data, cb)
     local WeaponData = QBCore.Shared.Items[data.WeaponData.name]
     local Attachment = WeaponAttachments[WeaponData.name:upper()][data.AttachmentData.attachment]
 
-    QBCore.Functions.TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
+    exports['qbr-core']:TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
         if NewAttachments ~= false then
             local Attachies = {}
             RemoveWeaponComponentFromPed(ped, GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
@@ -892,7 +892,7 @@ RegisterNUICallback('combineWithAnim', function(data)
     local animText = combineData.anim.text
     local animTimeout = combineData.anim.timeOut
 
-    QBCore.Functions.Progressbar("combine_anim", animText, animTimeout, false, true, {
+    exports['qbr-core']:Progressbar("combine_anim", animText, animTimeout, false, true, {
         disableMovement = false,
         disableCarMovement = true,
         disableMouse = false,
@@ -906,7 +906,7 @@ RegisterNUICallback('combineWithAnim', function(data)
         TriggerServerEvent('inventory:server:combineItem', combineData.reward, data.requiredItem, data.usedItem)
     end, function() -- Cancel
         StopAnimTask(ped, aDict, aLib, 1.0)
-        QBCore.Functions.Notify(Lang:t("error.failed"), "error")
+        exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
     end)
 end)
 
@@ -923,17 +923,17 @@ RegisterNUICallback("PlayDropFail", function()
 end)
 
 RegisterNUICallback("GiveItem", function(data)
-    local player, distance = QBCore.Functions.GetClosestPlayer(GetEntityCoords(PlayerPedId()))
+    local player, distance = exports['qbr-core']:GetClosestPlayer(GetEntityCoords(PlayerPedId()))
     if player ~= -1 and distance < 3 then
         if (data.inventory == 'player') then
             local playerId = GetPlayerServerId(player)
             SetCurrentPedWeapon(PlayerPedId(),'WEAPON_UNARMED',true)
             TriggerServerEvent("inventory:server:GiveItem", playerId, data.inventory, data.item, data.amount)
         else
-            QBCore.Functions.Notify(Lang:t("error.not_owned"), "error")
+            exports['qbr-core']:Notify(Lang:t("error.not_owned"), "error")
         end
     else
-        QBCore.Functions.Notify(Lang:t("error.no_near"), "error")
+        exports['qbr-core']:Notify(Lang:t("error.no_near"), "error")
     end
 end)
 
@@ -957,7 +957,7 @@ RegisterNUICallback('UseWeaponItem', function(data)
             itemData = itemData,
             equipped = false
         }
-        QBCore.Functions.TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
+        exports['qbr-core']:TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
             local ammo = tonumber(result)
             Citizen.InvokeNative(0x5E3BDDBCB83F3D84, PlayerPedId(), weapon, ammo, false, true, 0, false, 0, 0, 0xCA3454E6, false, 0, false)
             TriggerEvent('weapons:client:SetCurrentWeapon', itemData, true)
