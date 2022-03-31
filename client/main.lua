@@ -1,7 +1,6 @@
 -- Variables
-
-
 local PlayerData = exports['qbr-core']:GetPlayerData()
+local sharedItems = exports['qbr-core']:GetItems()
 local inInventory = false
 local currentWeapon = nil
 local CurrentWeaponData = {}
@@ -143,13 +142,13 @@ end
 
 local function ItemsToItemInfo()
 	itemInfos = {
-		[1] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 20x, " ..QBCore.Shared.Items["plastic"]["label"] .. ": 20x."},
-		[2] = {costs = QBCore.Shared.Items["coffeeseeds"]["label"] .. ": 20x, " ..QBCore.Shared.Items["water_bottle"]["label"] .. ": 20x."},
+		[1] = {costs = sharedItems["metalscrap"]["label"] .. ": 20x, " ..sharedItems["plastic"]["label"] .. ": 20x."},
+		[2] = {costs = sharedItems["coffeeseeds"]["label"] .. ": 20x, " ..sharedItems["water_bottle"]["label"] .. ": 20x."},
 	}
 
 	local items = {}
 	for k, item in pairs(Config.CraftingItems) do
-		local itemInfo = QBCore.Shared.Items[item.name:lower()]
+		local itemInfo = sharedItems[item.name:lower()]
 		items[item.slot] = {
 			name = itemInfo["name"],
 			amount = tonumber(item.amount),
@@ -172,12 +171,12 @@ end
 
 local function SetupAttachmentItemsInfo()
 	itemInfos = {
-		[1] = {costs = QBCore.Shared.Items["metalscrap"]["label"] .. ": 140x, " },
+		[1] = {costs = sharedItems["metalscrap"]["label"] .. ": 140x, " },
 	}
 
 	local items = {}
 	for k, item in pairs(Config.AttachmentCrafting["items"]) do
-		local itemInfo = QBCore.Shared.Items[item.name:lower()]
+		local itemInfo = sharedItems[item.name:lower()]
 		items[item.slot] = {
 			name = itemInfo["name"],
 			amount = tonumber(item.amount),
@@ -242,7 +241,7 @@ RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
 end)
 
 RegisterNetEvent('inventory:client:CheckOpenState', function(type, id, label)
-    local name = QBCore.Shared.SplitStr(label, "-")[2]
+    local name = exports['qbr-core']:SplitStr(label, "-")[2]
     if type == "stash" then
         if name ~= CurrentStash or CurrentStash == nil then
             TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
@@ -280,7 +279,7 @@ RegisterNetEvent('inventory:client:requiredItems', function(items, bool)
         for k, v in pairs(items) do
             itemTable[#itemTable+1] = {
                 item = items[k].name,
-                label = QBCore.Shared.Items[items[k].name]["label"],
+                label = sharedItems[items[k].name]["label"],
                 image = items[k].image,
             }
         end
@@ -312,7 +311,7 @@ RegisterNetEvent('inventory:client:OpenInventory', function(PlayerAmmo, inventor
             inventory = inventory,
             slots = MaxInventorySlots,
             other = other,
-            maxweight = QBCore.Config.Player.MaxWeight,
+            maxweight = exports['qbr-core']:GetConfig().Player.MaxWeight,
             Ammo = PlayerAmmo,
             maxammo = Config.MaximumAmmoValues,
         })
@@ -324,7 +323,7 @@ RegisterNetEvent('inventory:client:UpdatePlayerInventory', function(isError)
     SendNUIMessage({
         action = "update",
         inventory = PlayerData.items,
-        maxweight = QBCore.Config.Player.MaxWeight,
+        maxweight = exports['qbr-core']:GetConfig().Player.MaxWeight,
         slots = MaxInventorySlots,
         error = isError,
     })
@@ -348,7 +347,7 @@ RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, am
 	}, {}, {}, function() -- Done
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
         TriggerServerEvent("inventory:server:CraftItems", itemName, itemCosts, amount, toSlot, points)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemName], 'add')
+        TriggerEvent('inventory:client:ItemBox', sharedItems[itemName], 'add')
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
@@ -375,7 +374,7 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
 	}, {}, {}, function() -- Done
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
         TriggerServerEvent("inventory:server:CraftAttachment", itemName, itemCosts, amount, toSlot, points)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemName], 'add')
+        TriggerEvent('inventory:client:ItemBox', sharedItems[itemName], 'add')
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
@@ -396,7 +395,7 @@ RegisterNetEvent('inventory:client:PickupSnowballs', function()
     }, {}, {}, {}, function() -- Done
         ClearPedTasks(ped)
         TriggerServerEvent('QBCore:Server:AddItem', "snowball", 1)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
+        TriggerEvent('inventory:client:ItemBox', sharedItems["snowball"], "add")
     end, function() -- Cancel
         ClearPedTasks(ped)
         exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
@@ -805,7 +804,7 @@ end)
 
 RegisterNUICallback('GetWeaponData', function(data, cb)
     local data = {
-        WeaponData = QBCore.Shared.Items[data.weapon],
+        WeaponData = sharedItems[data.weapon],
         AttachmentData = FormatWeaponAttachments(data.ItemData)
     }
     cb(data)
@@ -813,7 +812,7 @@ end)
 
 RegisterNUICallback('RemoveAttachment', function(data, cb)
     local ped = PlayerPedId()
-    local WeaponData = QBCore.Shared.Items[data.WeaponData.name]
+    local WeaponData = sharedItems[data.WeaponData.name]
     local Attachment = WeaponAttachments[WeaponData.name:upper()][data.AttachmentData.attachment]
 
     exports['qbr-core']:TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
@@ -843,7 +842,7 @@ RegisterNUICallback('RemoveAttachment', function(data, cb)
 end)
 
 RegisterNUICallback('getCombineItem', function(data, cb)
-    cb(QBCore.Shared.Items[data.item])
+    cb(sharedItems[data.item])
 end)
 
 RegisterNUICallback("CloseInventory", function()
