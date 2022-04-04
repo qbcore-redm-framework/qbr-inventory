@@ -351,7 +351,7 @@ RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, am
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
+        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 2000, 0, 'mp_lobby_textures', 'cross')
         isCrafting = false
 	end)
 end)
@@ -378,7 +378,7 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
+        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 2000, 0, 'mp_lobby_textures', 'cross')
         isCrafting = false
 	end)
 end)
@@ -398,7 +398,7 @@ RegisterNetEvent('inventory:client:PickupSnowballs', function()
         TriggerEvent('inventory:client:ItemBox', sharedItems["snowball"], "add")
     end, function() -- Cancel
         ClearPedTasks(ped)
-        exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
+        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 2000, 0, 'mp_lobby_textures', 'cross')
     end)
 end)
 
@@ -520,7 +520,7 @@ end, false)
                             -- curVeh = vehicle
                             -- CurrentGlovebox = nil
                         -- else
-                            -- exports['qbr-core']:Notify("Vehicle Locked", "error")
+                            -- exports['qbr-core']:Notify(9, "Vehicle Locked", 2000, 0, 'mp_lobby_textures', 'cross')
                             -- return
                         -- end
                     -- else
@@ -662,7 +662,7 @@ CreateThread(function()
 									curVeh = vehicle
 									CurrentGlovebox = nil
 								else
-									exports['qbr-core']:Notify(Lang:t("error.veh_locked"), "error")
+									exports['qbr-core']:Notify(9, Lang:t("error.veh_locked"), 2000, 0, 'mp_lobby_textures', 'cross')
 									return
 								end
 							else
@@ -799,7 +799,7 @@ RegisterNUICallback('RobMoney', function(data)
 end)
 
 RegisterNUICallback('Notify', function(data)
-    exports['qbr-core']:Notify(data.message, data.type)
+    exports['qbr-core']:Notify(9, data.message, data.type)
 end)
 
 RegisterNUICallback('GetWeaponData', function(data, cb)
@@ -905,7 +905,7 @@ RegisterNUICallback('combineWithAnim', function(data)
         TriggerServerEvent('inventory:server:combineItem', combineData.reward, data.requiredItem, data.usedItem)
     end, function() -- Cancel
         StopAnimTask(ped, aDict, aLib, 1.0)
-        exports['qbr-core']:Notify(Lang:t("error.failed"), "error")
+        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 2000, 0, 'mp_lobby_textures', 'cross')
     end)
 end)
 
@@ -929,10 +929,10 @@ RegisterNUICallback("GiveItem", function(data)
             SetCurrentPedWeapon(PlayerPedId(),'WEAPON_UNARMED',true)
             TriggerServerEvent("inventory:server:GiveItem", playerId, data.inventory, data.item, data.amount)
         else
-            exports['qbr-core']:Notify(Lang:t("error.not_owned"), "error")
+            exports['qbr-core']:Notify(9, Lang:t("error.not_owned"), 2000, 0, 'mp_lobby_textures', 'cross')
         end
     else
-        exports['qbr-core']:Notify(Lang:t("error.no_near"), "error")
+        exports['qbr-core']:Notify(9, Lang:t("error.no_near"), 2000, 0, 'mp_lobby_textures', 'cross')
     end
 end)
 

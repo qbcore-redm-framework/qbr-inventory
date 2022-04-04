@@ -516,7 +516,7 @@ local function CreateNewDrop(source, fromSlot, toSlot, itemAmount)
 			TriggerClientEvent('Radio.Set', source, false)
 		end
 	else
-		TriggerClientEvent("QBCore:Notify", source, Lang:t("error.not_owned"), "error")
+		TriggerClientEvent("QBCore:Notify", source, Lang:t("error.not_owned"), 2000, 0, 'mp_lobby_textures', 'cross')
 		return
 	end
 end
@@ -804,7 +804,7 @@ RegisterNetEvent('inventory:server:OpenInventory', function(name, id, other)
 			TriggerClientEvent("inventory:client:OpenInventory", src, {}, Player.PlayerData.items)
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', src, Lang:t("error.no_access"), 'error')
+		TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.no_access"), 2000, 0, 'mp_lobby_textures', 'cross')
 	end
 end)
 
@@ -1008,7 +1008,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 					-- local itemInfo = sharedItems[fromItemData.name:lower()]
 					-- exports['qbr-traphouse']:AddHouseItem(traphouseId, toSlot, itemInfo["name"], fromAmount, fromItemData.info, src)
 				-- else
-					-- TriggerClientEvent('QBCore:Notify', src, "You can\'t sell this item..", 'error')
+					-- TriggerClientEvent('QBCore:Notify', src, 9, "You can\'t sell this item..", 2000, 0, 'mp_lobby_textures', 'cross')
 				-- end
 			else
 				-- drop
@@ -1039,7 +1039,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				end
 			end
 		else
-			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_owned"), "error")
+			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_owned"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	elseif exports['qbr-core']:SplitStr(fromInventory, "-")[1] == "otherplayer" then
 		local playerId = tonumber(exports['qbr-core']:SplitStr(fromInventory, "-")[2])
@@ -1084,7 +1084,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				OtherPlayer.Functions.AddItem(itemInfo["name"], fromAmount, toSlot, fromItemData.info)
 			end
 		else
-			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), "error")
+			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	elseif exports['qbr-core']:SplitStr(fromInventory, "-")[1] == "trunk" then
 		local plate = exports['qbr-core']:SplitStr(fromInventory, "-")[2]
@@ -1129,7 +1129,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				AddToTrunk(plate, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
 			end
 		else
-			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), "error")
+			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	elseif exports['qbr-core']:SplitStr(fromInventory, "-")[1] == "glovebox" then
 		local plate = exports['qbr-core']:SplitStr(fromInventory, "-")[2]
@@ -1174,7 +1174,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				AddToGlovebox(plate, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
 			end
 		else
-			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), "error")
+			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	elseif exports['qbr-core']:SplitStr(fromInventory, "-")[1] == "stash" then
 		local stashId = exports['qbr-core']:SplitStr(fromInventory, "-")[2]
@@ -1220,7 +1220,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				AddToStash(stashId, toSlot, fromSlot, itemInfo["name"], fromAmount, fromItemData.info)
 			end
 		else
-			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), "error")
+			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	-- elseif exports['qbr-core']:SplitStr(fromInventory, "-")[1] == "traphouse" then
 		-- local traphouseId = exports['qbr-core']:SplitStr(fromInventory, "-")[2]
@@ -1261,7 +1261,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				-- exports['qbr-traphouse']:AddHouseItem(traphouseId, toSlot, itemInfo["name"], fromAmount, fromItemData.info, src)
 			-- end
 		-- else
-			-- TriggerClientEvent("QBCore:Notify", src, "Item doesn't exist??", "error")
+			-- TriggerClientEvent("QBCore:Notify", src, "Item doesn't exist??", 2000, 0, 'mp_lobby_textures', 'cross')
 		-- end
 	elseif exports['qbr-core']:SplitStr(fromInventory, "-")[1] == "itemshop" then
 		local shopType = exports['qbr-core']:SplitStr(fromInventory, "-")[2]
@@ -1277,19 +1277,19 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 					itemData.info.serie = tostring(exports['qbr-core']:RandomInt(2) .. exports['qbr-core']:RandomStr(3) .. exports['qbr-core']:RandomInt(1) .. exports['qbr-core']:RandomStr(2) .. exports['qbr-core']:RandomInt(3) .. exports['qbr-core']:RandomStr(4))
 					Player.Functions.AddItem(itemData.name, 1, toSlot, itemData.info)
 					TriggerClientEvent('qbr-drugs:client:updateDealerItems', src, itemData, 1)
-					TriggerClientEvent('QBCore:Notify', src, Lang:t("success.bought_item", {item = itemInfo["label"]}), "success")
+					TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.bought_item", {item = itemInfo["label"]}), 2000, 0, 'hud_textures', 'check')
 					TriggerEvent("qbr-log:server:CreateLog", "dealers", "Dealer item bought", "green", "**"..GetPlayerName(src) .. "** bought a " .. itemInfo["label"] .. " for $"..price)
 				else
-					TriggerClientEvent('QBCore:Notify', src, Lang:t("error.no_cash"), "error")
+					TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.no_cash"), 2000, 0, 'mp_lobby_textures', 'cross')
 				end
 			else
 				if Player.Functions.RemoveMoney("cash", price, "dealer-item-bought") then
 					Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
 					TriggerClientEvent('qbr-drugs:client:updateDealerItems', src, itemData, fromAmount)
-					TriggerClientEvent('QBCore:Notify', src, itemInfo["label"] .. " bought!", "success")
+					TriggerClientEvent('QBCore:Notify', src, 9, itemInfo["label"] .. " bought!", 2000, 0, 'hud_textures', 'check')
 					TriggerEvent("qbr-log:server:CreateLog", "dealers", "Dealer item bought", "green", "**"..GetPlayerName(src) .. "** bought a " .. itemInfo["label"] .. "  for $"..price)
 				else
-					TriggerClientEvent('QBCore:Notify', src, Lang:t("error.no_cash"), "error")
+					TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.no_cash"), 2000, 0, 'mp_lobby_textures', 'cross')
 				end
 			end
 		elseif exports['qbr-core']:SplitStr(shopType, "_")[1] == "Itemshop" then
@@ -1299,7 +1299,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
                 end
 				Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
 				TriggerClientEvent('qbr-shops:client:UpdateShop', src, exports['qbr-core']:SplitStr(shopType, "_")[2], itemData, fromAmount)
-				TriggerClientEvent('QBCore:Notify', src, Lang:t("success.bought_item", {item = itemInfo["label"]}), "success")
+				TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.bought_item", {item = itemInfo["label"]}), 2000, 0, 'hud_textures', 'check')
 				TriggerEvent("qbr-log:server:CreateLog", "shops", "Shop item bought", "green", "**"..GetPlayerName(src) .. "** bought a " .. itemInfo["label"] .. " for $"..price)
 			elseif bankBalance >= price then
 				Player.Functions.RemoveMoney("bank", price, "itemshop-bought-item")
@@ -1308,23 +1308,23 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
                 end
 				Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
 				TriggerClientEvent('qbr-shops:client:UpdateShop', src, exports['qbr-core']:SplitStr(shopType, "_")[2], itemData, fromAmount)
-				TriggerClientEvent('QBCore:Notify', src, Lang:t("success.bought_item", {item = itemInfo["label"]}), "success")
+				TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.bought_item", {item = itemInfo["label"]}), 2000, 0, 'hud_textures', 'check')
 				TriggerEvent("qbr-log:server:CreateLog", "shops", "Shop item bought", "green", "**"..GetPlayerName(src) .. "** bought a " .. itemInfo["label"] .. " for $"..price)
 			else
-				TriggerClientEvent('QBCore:Notify', src, "You don't have enough cash..", "error")
+				TriggerClientEvent('QBCore:Notify', src, 9, "You don't have enough cash..", 2000, 0, 'mp_lobby_textures', 'cross')
 			end
 		else
 			if Player.Functions.RemoveMoney("cash", price, "unkown-itemshop-bought-item") then
 				Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
-				TriggerClientEvent('QBCore:Notify', src, Lang:t("success.bought_item", {item = itemInfo["label"]}), "success")
+				TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.bought_item", {item = itemInfo["label"]}), 2000, 0, 'hud_textures', 'check')
 				TriggerEvent("qbr-log:server:CreateLog", "shops", "Shop item bought", "green", "**"..GetPlayerName(src) .. "** bought a " .. itemInfo["label"] .. " for $"..price)
 			elseif bankBalance >= price then
 				Player.Functions.RemoveMoney("bank", price, "unkown-itemshop-bought-item")
 				Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
-				TriggerClientEvent('QBCore:Notify', src, Lang:t("success.bought_item", {item = itemInfo["label"]}), "success")
+				TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.bought_item", {item = itemInfo["label"]}), 2000, 0, 'hud_textures', 'check')
 				TriggerEvent("qbr-log:server:CreateLog", "shops", "Shop item bought", "green", "**"..GetPlayerName(src) .. "** bought a " .. itemInfo["label"] .. " for $"..price)
 			else
-				TriggerClientEvent('QBCore:Notify', src, Lang:t("error.no_cash"), "error")
+				TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.no_cash"), 2000, 0, 'mp_lobby_textures', 'cross')
 			end
 		end
 	elseif fromInventory == "crafting" then
@@ -1333,7 +1333,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 			TriggerClientEvent("inventory:client:CraftItems", src, itemData.name, itemData.costs, fromAmount, toSlot, itemData.points)
 		else
 			TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, true)
-			TriggerClientEvent('QBCore:Notify', src, Lang:t("error.missing_item"), "error")
+			TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.missing_item"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	elseif fromInventory == "attachment_crafting" then
 		local itemData = Config.AttachmentCrafting["items"][fromSlot]
@@ -1341,7 +1341,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 			TriggerClientEvent("inventory:client:CraftAttachment", src, itemData.name, itemData.costs, fromAmount, toSlot, itemData.points)
 		else
 			TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, true)
-			TriggerClientEvent('QBCore:Notify', src, Lang:t("error.missing_item"), "error")
+			TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.missing_item"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	else
 		-- drop
@@ -1396,7 +1396,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				end
 			end
 		else
-			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), "error")
+			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	end
 end)
@@ -1413,8 +1413,8 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, inventory, ite
     local Player = exports['qbr-core']:GetPlayer(src)
     local OtherPlayer = exports['qbr-core']:GetPlayer(tonumber(target))
     local dist = #(GetEntityCoords(GetPlayerPed(src))-GetEntityCoords(GetPlayerPed(target)))
-	if Player == OtherPlayer then return TriggerClientEvent('QBCore:Notify', src, Lang:t("error.yourself")) end
-	if dist > 2 then return TriggerClientEvent('QBCore:Notify', src, Lang:t("error.toofar")) end
+	if Player == OtherPlayer then return TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.yourself"), 2000, 0, 'mp_lobby_textures', 'cross') end
+	if dist > 2 then return TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.toofar"), 2000, 0, 'mp_lobby_textures', 'cross') end
 	if amount <= item.amount then
 		if amount == 0 then
 			amount = item.amount
@@ -1425,19 +1425,19 @@ RegisterServerEvent("inventory:server:GiveItem", function(target, inventory, ite
 			TriggerClientEvent("inventory:client:UpdatePlayerInventory", target, true)
 			Player.Functions.RemoveItem(item.name, amount, item.slot)
 			TriggerClientEvent('inventory:client:ItemBox',src, sharedItems[item.name], "remove")
-			TriggerClientEvent('QBCore:Notify', src, Lang:t("success.gave", {amount = amount, item = item.label, firstname = OtherPlayer.PlayerData.charinfo.firstname, lastname = OtherPlayer.PlayerData.charinfo.lastname}))
+			TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.gave", {amount = amount, item = item.label, firstname = OtherPlayer.PlayerData.charinfo.firstname, lastname = OtherPlayer.PlayerData.charinfo.lastname}))
 			TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, true)
 			TriggerClientEvent('qbr-inventory:client:giveAnim', src)
 			TriggerClientEvent('qbr-inventory:client:giveAnim', target)
 		else
 
-			TriggerClientEvent('QBCore:Notify', src, Lang:t("error.otherfull"), "error")
-			TriggerClientEvent('QBCore:Notify', target, Lang:t("error.invfull"), "error")
+			TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.otherfull"), 2000, 0, 'mp_lobby_textures', 'cross')
+			TriggerClientEvent('QBCore:Notify', target, Lang:t("error.invfull"), 2000, 0, 'mp_lobby_textures', 'cross')
 			TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
 			TriggerClientEvent("inventory:client:UpdatePlayerInventory", target, false)
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', src, Lang:t("error.not_enough"), "error")
+		TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("error.not_enough"), 2000, 0, 'mp_lobby_textures', 'cross')
 	end
 end)
 
@@ -1467,10 +1467,10 @@ exports['qbr-core']:AddCommand("resetinv", "Reset Inventory (Admin Only)", {{nam
 				Stashes[invId].isOpen = false
 			end
 		else
-			TriggerClientEvent('QBCore:Notify', source, Lang:t("error.invalid_type"), "error")
+			TriggerClientEvent('QBCore:Notify', source, 9, Lang:t("error.invalid_type"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', source, Lang:t("error.arguments"), "error")
+		TriggerClientEvent('QBCore:Notify', source, 9, Lang:t("error.arguments"), 2000, 0, 'mp_lobby_textures', 'cross')
 	end
 end, "admin")
 
@@ -1508,19 +1508,19 @@ exports['qbr-core']:AddCommand("giveitem", "Give An Item (Admin Only)", {{name="
 				end
 
 				if Player.Functions.AddItem(itemData["name"], amount, false, info) then
-					TriggerClientEvent('QBCore:Notify', src, Lang:t("success.yougave", {amount = amount, item = itemData["name"], name = GetPlayerName(tonumber(args[1]))}), "success")
+					TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.yougave", {amount = amount, item = itemData["name"], name = GetPlayerName(tonumber(args[1]))}), 2000, 0, 'hud_textures', 'check')
 					TriggerClientEvent('inventory:client:ItemBox', tonumber(args[1]), sharedItems[itemData["name"]], 'add')
 				else
-					TriggerClientEvent('QBCore:Notify', source,  Lang:t("error.cant_give"), "error")
+					TriggerClientEvent('QBCore:Notify', source, 9,  Lang:t("error.cant_give"), 2000, 0, 'mp_lobby_textures', 'cross')
 				end
 			else
-				TriggerClientEvent('QBCore:Notify', source,  Lang:t("error.not_exist"), "error")
+				TriggerClientEvent('QBCore:Notify', source, 9,  Lang:t("error.not_exist"), 2000, 0, 'mp_lobby_textures', 'cross')
 			end
 		else
-			TriggerClientEvent('QBCore:Notify', source,  Lang:t("error.invalid_amount"), "error")
+			TriggerClientEvent('QBCore:Notify', source, 9,  Lang:t("error.invalid_amount"), 2000, 0, 'mp_lobby_textures', 'cross')
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', source,  Lang:t("error.not_online"), "error")
+		TriggerClientEvent('QBCore:Notify', source, 9,  Lang:t("error.not_online"), 2000, 0, 'mp_lobby_textures', 'cross')
 	end
 end, "admin")
 
