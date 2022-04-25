@@ -383,32 +383,6 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
 	end)
 end)
 
-RegisterNetEvent('inventory:client:PickupSnowballs', function()
-    local ped = PlayerPedId()
-    LoadAnimDict('anim@mp_snowball')
-    TaskPlayAnim(ped, 'anim@mp_snowball', 'pickup_snowball', 3.0, 3.0, -1, 0, 1, 0, 0, 0)
-    exports['qbr-core']:Progressbar("pickupsnowball", Lang:t("info.pickup_snow"), 1500, false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        ClearPedTasks(ped)
-        TriggerServerEvent('QBCore:Server:AddItem', "snowball", 1)
-        TriggerEvent('inventory:client:ItemBox', sharedItems["snowball"], "add")
-    end, function() -- Cancel
-        ClearPedTasks(ped)
-        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 2000, 0, 'mp_lobby_textures', 'cross')
-    end)
-end)
-
-RegisterNetEvent('inventory:client:UseSnowball', function(amount)
-    local ped = PlayerPedId()
-    GiveWeaponToPed(ped, `weapon_snowball`, amount, false, false)
-    SetPedAmmo(ped, `weapon_snowball`, amount)
-    SetCurrentPedWeapon(ped, `weapon_snowball`, true)
-end)
-
 RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
     local ply = PlayerPedId()
     local weaponName = tostring(weaponData.name)
@@ -634,7 +608,7 @@ end, false)
 CreateThread(function()
     while true do
         Wait(0)
-        if IsControlJustReleased(0, 0xD8F73058) and IsInputDisabled(0) then -- key open inventory U
+        if IsControlJustReleased(0, 0xC1989F95) and IsInputDisabled(0) then -- key open inventory I
             if not isCrafting then
 				if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and not IsPauseMenuActive() then
 					local ped = PlayerPedId()
