@@ -753,7 +753,7 @@ CreateThread(function()
 			end
         end
 
-        if IsDisabledControlPressed(0, 0x26E9DC00) and IsInputDisabled(0) then -- z  Hotbar
+        if IsDisabledControlJustPressed(0, 0x26E9DC00) and IsInputDisabled(0) then -- z  Hotbar
             isHotbar = not isHotbar
             ToggleHotbar(isHotbar)
         end

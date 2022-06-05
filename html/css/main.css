@@ -319,7 +319,7 @@ body {
 
 .item-slot-quality {
 	position: absolute;
-	bottom: 1.7vh;
+	bottom: 0;
 	width: 100%;
 	height: 0.3vh;
 	background-color: rgba(32, 6, 6, 0.15);

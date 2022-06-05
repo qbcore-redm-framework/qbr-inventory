@@ -1508,7 +1508,7 @@ exports['qbr-core']:AddCommand("giveitem", "Give An Item (Admin Only)", {{name="
 				end
 
 				if Player.Functions.AddItem(itemData["name"], amount, false, info) then
-					TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.yougave", {amount = amount, item = itemData["name"], name = GetPlayerName(tonumber(args[1]))}), 2000, 0, 'hud_textures', 'check')
+					TriggerClientEvent('QBCore:Notify', source, 9, Lang:t("success.yougave", {amount = amount, item = itemData["name"], name = GetPlayerName(tonumber(args[1]))}), 2000, 0, 'hud_textures', 'check')
 					TriggerClientEvent('inventory:client:ItemBox', tonumber(args[1]), sharedItems[itemData["name"]], 'add')
 				else
 					TriggerClientEvent('QBCore:Notify', source, 9,  Lang:t("error.cant_give"), 2000, 0, 'mp_lobby_textures', 'cross')
