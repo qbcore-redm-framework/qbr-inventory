@@ -351,7 +351,7 @@ RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, am
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 2000, 0, 'mp_lobby_textures', 'cross')
+        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
         isCrafting = false
 	end)
 end)
@@ -378,7 +378,7 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
         isCrafting = false
 	end, function() -- Cancel
 		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 2000, 0, 'mp_lobby_textures', 'cross')
+        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
         isCrafting = false
 	end)
 end)
@@ -494,7 +494,7 @@ end, false)
                             -- curVeh = vehicle
                             -- CurrentGlovebox = nil
                         -- else
-                            -- exports['qbr-core']:Notify(9, "Vehicle Locked", 2000, 0, 'mp_lobby_textures', 'cross')
+                            -- exports['qbr-core']:Notify(9, "Vehicle Locked", 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
                             -- return
                         -- end
                     -- else
@@ -632,11 +632,11 @@ CreateThread(function()
 							-- end
 							if #(pos - trunkpos) < 2.0 and not IsPedInAnyVehicle(ped) then
 								if GetVehicleDoorLockStatus(vehicle) < 2 then
-									CurrentVehicle = exports['qbr-core']:GetPlate(vehicle))
+									CurrentVehicle = exports['qbr-core']:GetPlate(vehicle)
 									curVeh = vehicle
 									CurrentGlovebox = nil
 								else
-									exports['qbr-core']:Notify(9, Lang:t("error.veh_locked"), 2000, 0, 'mp_lobby_textures', 'cross')
+									exports['qbr-core']:Notify(9, Lang:t("error.veh_locked"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
 									return
 								end
 							else
@@ -879,7 +879,7 @@ RegisterNUICallback('combineWithAnim', function(data)
         TriggerServerEvent('inventory:server:combineItem', combineData.reward, data.requiredItem, data.usedItem)
     end, function() -- Cancel
         StopAnimTask(ped, aDict, aLib, 1.0)
-        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 2000, 0, 'mp_lobby_textures', 'cross')
+        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
     end)
 end)
 
@@ -903,10 +903,10 @@ RegisterNUICallback("GiveItem", function(data)
             SetCurrentPedWeapon(PlayerPedId(),'WEAPON_UNARMED',true)
             TriggerServerEvent("inventory:server:GiveItem", playerId, data.inventory, data.item, data.amount)
         else
-            exports['qbr-core']:Notify(9, Lang:t("error.not_owned"), 2000, 0, 'mp_lobby_textures', 'cross')
+            exports['qbr-core']:Notify(9, Lang:t("error.not_owned"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
         end
     else
-        exports['qbr-core']:Notify(9, Lang:t("error.no_near"), 2000, 0, 'mp_lobby_textures', 'cross')
+        exports['qbr-core']:Notify(9, Lang:t("error.no_near"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
     end
 end)
 
