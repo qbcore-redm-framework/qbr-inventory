@@ -619,7 +619,7 @@ CreateThread(function()
 
 					if IsPedInAnyVehicle(ped) then
 						local vehicle = GetVehiclePedIsIn(ped, false)
-						CurrentGlovebox = GetVehicleNumberPlateText(vehicle)
+						CurrentGlovebox = exports['qbr-core']:GetPlate(vehicle)
 						curVeh = vehicle
 						CurrentVehicle = nil
 					else
@@ -632,7 +632,7 @@ CreateThread(function()
 							-- end
 							if #(pos - trunkpos) < 2.0 and not IsPedInAnyVehicle(ped) then
 								if GetVehicleDoorLockStatus(vehicle) < 2 then
-									CurrentVehicle = GetVehicleNumberPlateText(vehicle)
+									CurrentVehicle = exports['qbr-core']:GetPlate(vehicle))
 									curVeh = vehicle
 									CurrentGlovebox = nil
 								else
