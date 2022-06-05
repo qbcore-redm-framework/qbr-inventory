@@ -632,7 +632,7 @@ CreateThread(function()
 							-- end
 							if #(pos - trunkpos) < 2.0 and not IsPedInAnyVehicle(ped) then
 								if GetVehicleDoorLockStatus(vehicle) < 2 then
-									CurrentVehicle = exports['qbr-core']:GetPlate(vehicle))
+									CurrentVehicle = exports['qbr-core']:GetPlate(vehicle)
 									curVeh = vehicle
 									CurrentGlovebox = nil
 								else
