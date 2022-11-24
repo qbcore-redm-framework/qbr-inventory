@@ -9,7 +9,6 @@ local Drops = {}
 local CurrentDrop = nil
 local DropsNear = {}
 local CurrentVehicle = nil
-local CurrentGlovebox = nil
 local CurrentStash = nil
 local isCrafting = false
 local isHotbar = false
@@ -250,10 +249,6 @@ RegisterNetEvent('inventory:client:CheckOpenState', function(type, id, label)
         if name ~= CurrentVehicle or CurrentVehicle == nil then
             TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
         end
-    elseif type == "glovebox" then
-        if name ~= CurrentGlovebox or CurrentGlovebox == nil then
-            TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
-        end
     elseif type == "drop" then
         if name ~= CurrentDrop or CurrentDrop == nil then
             TriggerServerEvent('inventory:server:SetIsOpenState', false, type, id)
@@ -477,7 +472,6 @@ end, false)
 
             -- if IsPedInAnyVehicle(ped) then -- Is Player In Vehicle
                 -- local vehicle = GetVehiclePedIsIn(ped, false)
-                -- CurrentGlovebox = exports['qbr-core']:GetPlate(vehicle)
                 -- curVeh = vehicle
                 -- CurrentVehicle = nil
             -- else
@@ -492,7 +486,6 @@ end, false)
                         -- if GetVehicleDoorLockStatus(vehicle) < 2 then
                             -- CurrentVehicle = exports['qbr-core']:GetPlate(vehicle)
                             -- curVeh = vehicle
-                            -- CurrentGlovebox = nil
                         -- else
                             -- exports['qbr-core']:Notify(9, "Vehicle Locked", 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
                             -- return
@@ -564,8 +557,6 @@ end, false)
                 -- }
                 -- TriggerServerEvent("inventory:server:OpenInventory", "trunk", CurrentVehicle, other)
                 -- OpenTrunk()
-            -- elseif CurrentGlovebox then
-                -- TriggerServerEvent("inventory:server:OpenInventory", "glovebox", CurrentGlovebox)
             -- elseif CurrentDrop then
                 -- TriggerServerEvent("inventory:server:OpenInventory", "drop", CurrentDrop)
             -- elseif VendingMachine then
@@ -619,7 +610,6 @@ CreateThread(function()
 
 					if IsPedInAnyVehicle(ped) then
 						local vehicle = GetVehiclePedIsIn(ped, false)
-						CurrentGlovebox = exports['qbr-core']:GetPlate(vehicle)
 						curVeh = vehicle
 						CurrentVehicle = nil
 					else
@@ -634,7 +624,6 @@ CreateThread(function()
 								if GetVehicleDoorLockStatus(vehicle) < 2 then
 									CurrentVehicle = exports['qbr-core']:GetPlate(vehicle)
 									curVeh = vehicle
-									CurrentGlovebox = nil
 								else
 									exports['qbr-core']:Notify(9, Lang:t("error.veh_locked"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
 									return
@@ -695,8 +684,6 @@ CreateThread(function()
 						}
 						TriggerServerEvent("inventory:server:OpenInventory", "trunk", CurrentVehicle, other)
 						OpenTrunk()
-					elseif CurrentGlovebox ~= nil then
-						TriggerServerEvent("inventory:server:OpenInventory", "glovebox", CurrentGlovebox)
 					elseif CurrentDrop ~= 0 then
 						TriggerServerEvent("inventory:server:OpenInventory", "drop", CurrentDrop)
 					elseif VendingMachine ~= nil then
@@ -823,7 +810,6 @@ RegisterNUICallback("CloseInventory", function()
     if currentOtherInventory == "none-inv" then
         CurrentDrop = nil
         CurrentVehicle = nil
-        CurrentGlovebox = nil
         CurrentStash = nil
         SetNuiFocus(false, false)
         inInventory = false
@@ -834,9 +820,6 @@ RegisterNUICallback("CloseInventory", function()
         CloseTrunk()
         TriggerServerEvent("inventory:server:SaveInventory", "trunk", CurrentVehicle)
         CurrentVehicle = nil
-    elseif CurrentGlovebox ~= nil then
-        TriggerServerEvent("inventory:server:SaveInventory", "glovebox", CurrentGlovebox)
-        CurrentGlovebox = nil
     elseif CurrentStash ~= nil then
         TriggerServerEvent("inventory:server:SaveInventory", "stash", CurrentStash)
         CurrentStash = nil
