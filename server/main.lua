@@ -1480,7 +1480,7 @@ end)
 
 exports['qbr-core']:AddCommand("giveitem", "Give An Item (Admin Only)", {{name="id", help="Player ID"},{name="item", help="Name of the item (not a label)"}, {name="amount", help="Amount of items"}}, true, function(source, args)
 	local Player = exports['qbr-core']:GetPlayer(tonumber(args[1]))
-	local amount = tonumber(args[3])
+	local amount = tonumber(args[3]) or 1
 	local itemData = sharedItems[tostring(args[2]):lower()]
 	if Player then
 		if amount > 0 then
