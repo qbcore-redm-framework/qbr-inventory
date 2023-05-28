@@ -434,12 +434,17 @@ RegisterNetEvent("inventory:client:AddDropItem", function(dropId, player, coords
             y = y,
             z = z - 0.3,
         },
+        object = obj
     }
+    closeInventory()
 end)
 
 RegisterNetEvent('inventory:client:RemoveDropItem', function(dropId)
+    local obj = Drops[dropId].object
     Drops[dropId] = nil
     DropsNear[dropId] = nil
+    DeleteObject(obj)
+    SetEntityAsNoLongerNeeded(obj)
 end)
 
 RegisterNetEvent('inventory:client:DropItemAnim', function()
