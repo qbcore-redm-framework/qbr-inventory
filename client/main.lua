@@ -729,6 +729,7 @@ CreateThread(function()
         DisableControlAction(0, 0x8F9F9E58)
         DisableControlAction(0, 0xAB62E997)
         DisableControlAction(0, 0x26E9DC00)
+	DisableControlAction(0, 0xAC4BD4F1) -- Disable Weapon Wheel and Item Wheel
         if IsDisabledControlPressed(0, 0xE6F612E4) and IsInputDisabled(0) then  -- 1  slot
 			if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
 				TriggerServerEvent("inventory:server:UseItemSlot", 1)
