@@ -76,10 +76,10 @@ body {
 .player-inventory {
 	position: absolute;
 	top: 26%;
-	left: 14.2%;
-	width: 28%;
+	left: 10.2%;
+	width: 32%;
 	height: 47.16%;
-	padding: 4rem;
+	padding: 2.75rem;
 	padding-right: 0;
 	float: left;
 	overflow-x: hidden;
@@ -94,10 +94,10 @@ body {
 .other-inventory {
 	position: absolute;
 	top: 26%;
-	right: 16%;
-	width: 28%;
+	right: 12%;
+	width: 32%;
 	height: 47.16%;
-	padding: 4rem;
+	padding: 2.75rem;
 	padding-right: 0;
 	float: left;
 	overflow-x: hidden;
@@ -361,7 +361,7 @@ body {
 
 .player-inv-info {
 	position: absolute;
-	left: 14.5%;
+	left: 10.5%;
 	top: 22.2%;
 }
 
