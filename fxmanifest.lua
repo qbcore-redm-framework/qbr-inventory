@@ -34,4 +34,5 @@ files {
 	'html/*.ttf'
 }
 
+lua54 'yes'
 -- dependency 'qbr-weapons'
