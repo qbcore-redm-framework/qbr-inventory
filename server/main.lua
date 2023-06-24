@@ -266,9 +266,6 @@ local function CreateNewDrop(source, fromSlot, toSlot, itemAmount)
 		TriggerEvent("qbr-log:server:CreateLog", "drop", "New Item Drop", "red", "**".. GetPlayerName(source) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..source.."*) dropped new item; name: **"..itemData.name.."**, amount: **" .. itemAmount .. "**")
 		TriggerClientEvent("inventory:client:DropItemAnim", source)
 		TriggerClientEvent("inventory:client:AddDropItem", -1, dropId, source, coords)
-		if itemData.name:lower() == "radio" then
-			TriggerClientEvent('Radio.Set', source, false)
-		end
 	else
 		TriggerClientEvent("QBCore:Notify", source, Lang:t("error.not_owned"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
 		return
@@ -309,28 +306,26 @@ RegisterNetEvent('inventory:server:CraftItems', function(itemName, itemCosts, am
 	local src = source
 	local Player = exports['qbr-core']:GetPlayer(src)
 	local amount = tonumber(amount)
-	if itemName ~= nil and itemCosts ~= nil then
-		for k, v in pairs(itemCosts) do
-			Player.Functions.RemoveItem(k, (v*amount))
-		end
-		Player.Functions.AddItem(itemName, amount, toSlot)
-		Player.Functions.SetMetaData("craftingrep", Player.PlayerData.metadata["craftingrep"]+(points*amount))
-		TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
+	if not itemName or not itemCosts then return end
+	for k, v in pairs(itemCosts) do
+		if not Player.Functions.RemoveItem(k, (v*amount)) then return end
 	end
+	Player.Functions.AddItem(itemName, amount, toSlot)
+	Player.Functions.SetMetaData("craftingrep", Player.PlayerData.metadata["craftingrep"]+(points*amount))
+	TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
 end)
 
 RegisterNetEvent('inventory:server:CraftAttachment', function(itemName, itemCosts, amount, toSlot, points)
 	local src = source
 	local Player = exports['qbr-core']:GetPlayer(src)
 	local amount = tonumber(amount)
-	if itemName ~= nil and itemCosts ~= nil then
-		for k, v in pairs(itemCosts) do
-			Player.Functions.RemoveItem(k, (v*amount))
-		end
-		Player.Functions.AddItem(itemName, amount, toSlot)
-		--Player.Functions.SetMetaData("attachmentcraftingrep", Player.PlayerData.metadata["attachmentcraftingrep"]+(points*amount)) Temp Disabled Until Gets Added Back to Core
-		TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
+	if not itemName or not itemCosts then return end
+	for k, v in pairs(itemCosts) do
+		if not Player.Functions.RemoveItem(k, (v*amount)) then return end
 	end
+	Player.Functions.AddItem(itemName, amount, toSlot)
+	--Player.Functions.SetMetaData("attachmentcraftingrep", Player.PlayerData.metadata["attachmentcraftingrep"]+(points*amount)) Temp Disabled Until Gets Added Back to Core
+	TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
 end)
 
 RegisterNetEvent('inventory:server:SetIsOpenState', function(IsOpen, type, id)
@@ -608,9 +603,6 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 					end
 					local itemInfo = sharedItems[fromItemData.name:lower()]
 					AddToDrop(toInventory, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
-					if itemInfo["name"] == "radio" then
-						TriggerClientEvent('Radio.Set', src, false)
-					end
 				end
 			end
 		else
@@ -740,7 +732,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
                     itemData.info.serie = tostring(exports['qbr-core']:RandomInt(2) .. exports['qbr-core']:RandomStr(3) .. exports['qbr-core']:RandomInt(1) .. exports['qbr-core']:RandomStr(2) .. exports['qbr-core']:RandomInt(3) .. exports['qbr-core']:RandomStr(4))
                 end
 				Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
-				TriggerClientEvent('qbr-shops:client:UpdateShop', src, exports['qbr-core']:SplitStr(shopType, "_")[2], itemData, fromAmount)
+				TriggerEvent('qbr-shops:server:UpdateShopItems', exports['qbr-core']:SplitStr(shopType, "_")[2], fromSlot, fromAmount)
 				TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.bought_item", {item = itemInfo["label"]}), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
 				TriggerEvent("qbr-log:server:CreateLog", "shops", "Shop item bought", "green", "**"..GetPlayerName(src) .. "** bought a " .. itemInfo["label"] .. " for $"..price)
 			elseif bankBalance >= price then
@@ -749,7 +741,7 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
                     itemData.info.serie = tostring(exports['qbr-core']:RandomInt(2) .. exports['qbr-core']:RandomStr(3) .. exports['qbr-core']:RandomInt(1) .. exports['qbr-core']:RandomStr(2) .. exports['qbr-core']:RandomInt(3) .. exports['qbr-core']:RandomStr(4))
                 end
 				Player.Functions.AddItem(itemData.name, fromAmount, toSlot, itemData.info)
-				TriggerClientEvent('qbr-shops:client:UpdateShop', src, exports['qbr-core']:SplitStr(shopType, "_")[2], itemData, fromAmount)
+				TriggerEvent('qbr-shops:server:UpdateShopItems', exports['qbr-core']:SplitStr(shopType, "_")[2], fromSlot, fromAmount)
 				TriggerClientEvent('QBCore:Notify', src, 9, Lang:t("success.bought_item", {item = itemInfo["label"]}), 5000, 0, 'hud_textures', 'check', 'COLOR_WHITE')
 				TriggerEvent("qbr-log:server:CreateLog", "shops", "Shop item bought", "green", "**"..GetPlayerName(src) .. "** bought a " .. itemInfo["label"] .. " for $"..price)
 			else
@@ -800,9 +792,6 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 					if toItemData.name ~= fromItemData.name then
 						Player.Functions.RemoveItem(toItemData.name, toAmount, toSlot)
 						AddToDrop(fromInventory, toSlot, itemInfo["name"], toAmount, toItemData.info)
-						if itemInfo["name"] == "radio" then
-							TriggerClientEvent('Radio.Set', src, false)
-						end
 						TriggerEvent("qbr-log:server:CreateLog", "drop", "Swapped Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) swapped item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** with item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount .. "** - dropid: *" .. fromInventory .. "*")
 					else
 						TriggerEvent("qbr-log:server:CreateLog", "drop", "Stacked Item", "orange", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) stacked item; name: **"..toItemData.name.."**, amount: **" .. toAmount .. "** - from dropid: *" .. fromInventory .. "*")
@@ -822,18 +811,12 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 						local itemInfo = sharedItems[toItemData.name:lower()]
 						RemoveFromDrop(toInventory, toSlot, itemInfo["name"], toAmount)
 						AddToDrop(fromInventory, fromSlot, itemInfo["name"], toAmount, toItemData.info)
-						if itemInfo["name"] == "radio" then
-							TriggerClientEvent('Radio.Set', src, false)
-						end
 					end
 				else
 					--Player.PlayerData.items[fromSlot] = nil
 				end
 				local itemInfo = sharedItems[fromItemData.name:lower()]
 				AddToDrop(toInventory, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
-				if itemInfo["name"] == "radio" then
-					TriggerClientEvent('Radio.Set', src, false)
-				end
 			end
 		else
 			TriggerClientEvent("QBCore:Notify", src, Lang:t("error.not_exist"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
