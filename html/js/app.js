@@ -1950,7 +1950,7 @@ var requiredItemOpen = false;
 	};
 
 	Inventory.IsWeaponBlocked = function (WeaponName) {
-		var DurabilityBlockedWeapons = ['unarmed', 'lasso', 'melee', 'thrown'];
+		var DurabilityBlockedWeapons = ['unarmed', 'lasso', 'melee', 'thrown', '_kit_'];
 		var retval = false;
 		$.each(DurabilityBlockedWeapons, function (i, name) {
 			if (WeaponName.toLowerCase().includes(name)) {
