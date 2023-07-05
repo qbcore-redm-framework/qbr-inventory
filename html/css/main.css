@@ -575,7 +575,7 @@ body {
 .z-hotbar-inventory {
 	display: none;
 	position: absolute;
-	bottom: 1%;
+	bottom: 2%;
 	margin: 0 auto;
 	left: 0;
 	right: 0;
