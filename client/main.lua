@@ -188,6 +188,11 @@ RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
     PlayerData = val
 end)
 
+RegisterNetEvent('qbr-inventory:client:UpdateItems', function(slot, data)
+    if not slot or not tonumber(slot) then return end
+    PlayerData.items[slot] = data
+end)
+
 RegisterNetEvent('inventory:client:CheckOpenState', function(type, id, label)
     local name = exports['qbr-core']:SplitStr(label, "-")[2]
     if type == "stash" then
