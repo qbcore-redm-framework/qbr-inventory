@@ -215,15 +215,13 @@ RegisterNetEvent('inventory:client:ItemBox', function(itemData, type, amount)
     })
 end)
 
-RegisterNetEvent('inventory:client:requiredItems', function(items, bool)
+AddEventHandler('inventory:client:requiredItems', function(items)
+    local bool = items or false
     local itemTable = {}
     if bool then
-        for k, v in pairs(items) do
-            itemTable[#itemTable+1] = {
-                item = items[k].name,
-                label = sharedItems[items[k].name]["label"],
-                image = items[k].image,
-            }
+        for i=1, #items do
+            local item = sharedItems[items[i]]
+            itemTable[#itemTable+1] = {item = item.name, label = item.label, image = item.image}
         end
     end
     SendNUIMessage({action = "requiredItem", items = itemTable, toggle = bool})
