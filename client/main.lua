@@ -313,25 +313,19 @@ end)
 
 RegisterNetEvent("inventory:client:AddDropItem", function(dropId, player, coords)
     local forward = GetEntityForwardVector(GetPlayerPed(GetPlayerFromServerId(player)))
-	local x, y, z = table.unpack(coords + forward * 0.5)
     local ped     = PlayerPedId()
     local forward = GetEntityForwardVector(ped)
-    local x, y, z = table.unpack(coords + forward * 1.6)
     local model = `p_cs_lootsack02x`
     RequestModel(model)
-    while not HasModelLoaded(model) do Wait(500) end
-    local obj = CreateObject(model, x, y, z, true, true, true)
+    while not HasModelLoaded(model) do Wait(10) end
+    local _coords = coords + forward * 1.6
+    local obj = CreateObject(model, _coords.x, _coords.y, _coords.z-0.90)
     PlaceObjectOnGroundProperly(obj)
     SetEntityAsMissionEntity(obj, true, true)
     FreezeEntityPosition(obj , true)
-	local _coords = GetEntityCoords(obj)
     PlaySoundFrontend("show_info", "Study_Sounds", true, 0)
     SetModelAsNoLongerNeeded(model)
-    Drops[dropId] = {
-        id = dropId,
-        coords = vector3(x, y, z-0.3),
-        object = obj
-    }
+    Drops[dropId] = {id = dropId, coords = GetEntityCoords(obj), object = obj}
     closeInventory()
 end)
 
