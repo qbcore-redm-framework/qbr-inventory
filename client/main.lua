@@ -47,6 +47,25 @@ end
 
 exports("HasItem", HasItem)
 
+local function GetItemAmount(item, maxslot)
+    local maxslot = maxslot or #PlayerData.items
+    for i=1, maxslot do
+        local slot = PlayerData.items[i]
+        if slot and slot.name == item then
+            return slot.amount, i
+        end
+    end
+    return nil
+end
+
+exports("GetItemAmount", GetItemAmount)
+
+local function GetSlotData(from, to)
+    return table.move(PlayerData.items, from, to, from, {})
+end
+
+exports("GetSlotData", GetSlotData)
+
 local function DrawText3Ds(coords, text)
     local onScreen,_x,_y=GetScreenCoordFromWorldCoord(coords.x, coords.y, coords.z)
     SetTextScale(0.35, 0.35)
