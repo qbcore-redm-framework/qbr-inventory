@@ -105,18 +105,15 @@ local function LoadAnimDict(dict)
 end
 
 local function ItemsToItemInfo()
-	local itemInfos = {
-		[1] = {costs = sharedItems["metalscrap"]["label"] .. ": 20x, " ..sharedItems["plastic"]["label"] .. ": 20x."},
-		[2] = {costs = sharedItems["coffeeseeds"]["label"] .. ": 20x, " ..sharedItems["water_bottle"]["label"] .. ": 20x."},
-	}
-
 	local items = {}
 	for k, item in pairs(Config.CraftingItems) do
 		local itemInfo = sharedItems[item.name:lower()]
+		local jsonString = json.encode(item.costs)
+        local itemInfos = "Required: " .. jsonString:gsub('{"', ''):gsub('_', ' '):gsub('":', ': '):gsub(',"', ' and '):gsub('}', '')
 		items[k] = {
 			name = itemInfo["name"],
 			amount = tonumber(item.amount),
-			info = itemInfos[k],
+			info = {costs = itemInfos},
 			label = itemInfo["label"],
 			description = itemInfo["description"] or "",
 			weight = itemInfo["weight"],
@@ -134,17 +131,15 @@ local function ItemsToItemInfo()
 end
 
 local function SetupAttachmentItemsInfo()
-	local itemInfos = {
-		[1] = {costs = sharedItems["metalscrap"]["label"] .. ": 140x, " },
-	}
-
 	local items = {}
 	for k, item in pairs(Config.AttachmentCrafting) do
 		local itemInfo = sharedItems[item.name:lower()]
+		local jsonString = json.encode(item.costs)
+        local itemInfos = "Required: " .. jsonString:gsub('{"', ''):gsub('_', ' '):gsub('":', ': '):gsub(',"', ' and '):gsub('}', '')
 		items[k] = {
 			name = itemInfo["name"],
 			amount = tonumber(item.amount),
-			info = itemInfos[k],
+			info = {costs = itemInfos},
 			label = itemInfo["label"],
 			description = itemInfo["description"] or "",
 			weight = itemInfo["weight"],
