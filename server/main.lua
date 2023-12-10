@@ -324,7 +324,6 @@ RegisterNetEvent('inventory:server:CraftAttachment', function(itemName, itemCost
 		if not Player.Functions.RemoveItem(k, (v*amount)) then return end
 	end
 	Player.Functions.AddItem(itemName, amount, toSlot)
-	--Player.Functions.SetMetaData("attachmentcraftingrep", Player.PlayerData.metadata["attachmentcraftingrep"]+(points*amount)) Temp Disabled Until Gets Added Back to Core
 	TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
 end)
 
@@ -813,7 +812,6 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 						AddToDrop(fromInventory, fromSlot, itemInfo["name"], toAmount, toItemData.info)
 					end
 				else
-					--Player.PlayerData.items[fromSlot] = nil
 				end
 				local itemInfo = sharedItems[fromItemData.name:lower()]
 				AddToDrop(toInventory, toSlot, itemInfo["name"], fromAmount, fromItemData.info)
