@@ -21,7 +21,7 @@ Config.CraftingItems = {
         info = {},
         costs = {
             ["coffeeseeds"] = 20,
-            ["water_bottle"] = 20,
+            ["water"] = 20,
         },
         type = "item",
         threshold = 0,

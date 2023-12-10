@@ -3,7 +3,6 @@ local sharedItems = exports['qbr-core']:GetItems()
 local sid = GetPlayerServerId(PlayerId())
 local currentOtherInventory
 local inInventory = false
-local isCrafting = false
 local isHotbar = false
 local CurrentStash
 local CurrentDrop
@@ -104,90 +103,6 @@ local function LoadAnimDict(dict)
     end
 end
 
-local function ItemsToItemInfo()
-	local items = {}
-	for k, item in pairs(Config.CraftingItems) do
-		local itemInfo = sharedItems[item.name:lower()]
-		local jsonString = json.encode(item.costs)
-        local itemInfos = "Required: " .. jsonString:gsub('{"', ''):gsub('_', ' '):gsub('":', ': '):gsub(',"', ' and '):gsub('}', '')
-		items[k] = {
-			name = itemInfo["name"],
-			amount = tonumber(item.amount),
-			info = {costs = itemInfos},
-			label = itemInfo["label"],
-			description = itemInfo["description"] or "",
-			weight = itemInfo["weight"],
-			type = itemInfo["type"],
-			unique = itemInfo["unique"],
-			useable = itemInfo["useable"],
-			image = itemInfo["image"],
-			slot = k,
-			costs = item.costs,
-			threshold = item.threshold,
-			points = item.points,
-		}
-	end
-	Config.CraftingItems = items
-end
-
-local function SetupAttachmentItemsInfo()
-	local items = {}
-	for k, item in pairs(Config.AttachmentCrafting) do
-		local itemInfo = sharedItems[item.name:lower()]
-		local jsonString = json.encode(item.costs)
-        local itemInfos = "Required: " .. jsonString:gsub('{"', ''):gsub('_', ' '):gsub('":', ': '):gsub(',"', ' and '):gsub('}', '')
-		items[k] = {
-			name = itemInfo["name"],
-			amount = tonumber(item.amount),
-			info = {costs = itemInfos},
-			label = itemInfo["label"],
-			description = itemInfo["description"] or "",
-			weight = itemInfo["weight"],
-			unique = itemInfo["unique"],
-			useable = itemInfo["useable"],
-			image = itemInfo["image"],
-			slot = k,
-			costs = item.costs,
-			threshold = item.threshold,
-			points = item.points,
-		}
-	end
-	Config.AttachmentCrafting = items
-end
-
-local function GetThresholdItems()
-    if not Config.CraftingItems[1].slot then
-	    ItemsToItemInfo()
-    end
-	local items = {}
-	for k, item in pairs(Config.CraftingItems) do
-		if PlayerData.metadata["craftingrep"] >= Config.CraftingItems[k].threshold then
-			items[k] = Config.CraftingItems[k]
-		end
-	end
-	return items
-end
-
-local function GetAttachmentThresholdItems()
-    if not Config.AttachmentCrafting[1].slot then
-	    SetupAttachmentItemsInfo()
-    end
-	local items = {}
-	for k, item in pairs(Config.AttachmentCrafting) do
-		--if PlayerData.metadata["attachmentcraftingrep"] >= Config.AttachmentCrafting["items"][k].threshold then Disabled Until Added In Core
-			items[k] = Config.AttachmentCrafting[k]
-		--end
-	end
-	return items
-end
-
-local function GetWeaponCraftingItems()
-    local crafting = {}
-    crafting.label = Lang:t("info.attatch_label")
-    crafting.items = GetAttachmentThresholdItems()
-    return crafting
-end
-
 --------------------------------------------------------------------------
 ---- EVENTS & HANDLERS
 --------------------------------------------------------------------------
@@ -273,56 +188,6 @@ RegisterNetEvent('inventory:client:UpdatePlayerInventory', function(isError)
         slots = MaxInventorySlots,
         error = isError,
     })
-end)
-
-RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, amount, toSlot, points)
-    local ped = PlayerPedId()
-    SendNUIMessage({action = "close"})
-    isCrafting = true
-    exports['qbr-core']:Progressbar("repair_vehicle", Lang:t("info.crafting_progress"), (math.random(2000, 5000) * amount), false, true, {
-		disableMovement = true,
-		disableCarMovement = true,
-		disableMouse = false,
-		disableCombat = true,
-	}, {
-		animDict = "mini@repair",
-		anim = "fixing_a_player",
-		flags = 16,
-	}, {}, {}, function() -- Done
-		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        TriggerServerEvent("inventory:server:CraftItems", itemName, itemCosts, amount, toSlot, points)
-        TriggerEvent('inventory:client:ItemBox', sharedItems[itemName], 'add')
-        isCrafting = false
-	end, function() -- Cancel
-		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
-        isCrafting = false
-	end)
-end)
-
-RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCosts, amount, toSlot, points)
-    local ped = PlayerPedId()
-    SendNUIMessage({action = "close"})
-    isCrafting = true
-    exports['qbr-core']:Progressbar("repair_vehicle", Lang:t("info.crafting_progress"), (math.random(2000, 5000) * amount), false, true, {
-		disableMovement = true,
-		disableCarMovement = true,
-		disableMouse = false,
-		disableCombat = true,
-	}, {
-		animDict = "mini@repair",
-		anim = "fixing_a_player",
-		flags = 16,
-	}, {}, {}, function() -- Done
-		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        TriggerServerEvent("inventory:server:CraftAttachment", itemName, itemCosts, amount, toSlot, points)
-        TriggerEvent('inventory:client:ItemBox', sharedItems[itemName], 'add')
-        isCrafting = false
-	end, function() -- Cancel
-		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        exports['qbr-core']:Notify(9, Lang:t("error.failed"), 5000, 0, 'mp_lobby_textures', 'cross', 'COLOR_WHITE')
-        isCrafting = false
-	end)
 end)
 
 RegisterNetEvent("inventory:client:AddDropItem", function(dropId, player, coords)
@@ -480,15 +345,13 @@ CreateThread(function()
     while true do
         Wait(0)
         if IsDisabledControlJustReleased(0, 0xB238FE0B) and IsInputDisabled(0) then -- key open inventory Tab Key
-            if not isCrafting then
 				if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and not IsPauseMenuActive() then
 					local ped = PlayerPedId()
                     if CurrentDrop ~= 0 then
 						TriggerServerEvent("inventory:server:OpenInventory", "drop", CurrentDrop)
 					else
 						TriggerServerEvent("inventory:server:OpenInventory")
-					end
-				end
+                end
             end
         end
     end
@@ -561,36 +424,4 @@ CreateThread(function()
         end
         Wait(500)
     end
-end)
-
-CreateThread(function()
-    while true do
-        local sleep = 1000
-        if isLoggedIn then
-            local pos = GetEntityCoords(PlayerPedId())
-            local craftObject = GetClosestObjectOfType(pos, 2.0, -1718655749 , false, false, false)
-            if craftObject ~= 0 then
-                local objectPos = GetEntityCoords(craftObject)
-                if #(pos - objectPos) < 1.5 then
-                    sleep = 0
-                    DrawText3Ds(objectPos, "~d~E~s~ - "..Lang:t("info.craft"))
-                    if IsControlJustReleased(0, 0xCEFD9220) then
-                        local crafting = {}
-                        crafting.label = Lang:t("info.craft_label")
-                        crafting.items = GetThresholdItems()
-                        TriggerServerEvent("inventory:server:OpenInventory", "crafting", math.random(1, 99), crafting)
-                        sleep = 100
-                    end
-                end
-            end
-        end
-        Wait(sleep)
-    end
-end)
-
-CreateThread(function()
-    exports['qbr-core']:createPrompt("weapons:crafting", Config.AttachmentCraftingLocation, 0xCEFD9220, Lang:t("info.craft"), {
-        event = 'inventory:server:OpenInventory',
-        args = {"attachment_crafting", math.random(1, 99), GetWeaponCraftingItems()},
-    })
 end)

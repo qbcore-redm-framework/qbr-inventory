@@ -26,11 +26,7 @@ local Translations = {
         yougave = "You Have Given %{name} %{amount}x %{item} !",
     },
     info = {
-        crafting_progress = "Crafting..",
         pickup_snow = "Collecting snowballs..",
-        craft = "Craft",
-        craft_label = "Crafting",
-        attatch_label = "Attachment Crafting",
         stash_none = "Stash-None",
         stash = "Stash-",
         trunk_none = "Trunk-None",
