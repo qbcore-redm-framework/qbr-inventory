@@ -344,7 +344,7 @@ end)
 CreateThread(function()
     while true do
         Wait(0)
-        if IsDisabledControlJustReleased(0, 0xB238FE0B) and IsInputDisabled(0) then -- key open inventory Tab Key
+        if IsDisabledControlJustReleased(0, 0xC1989F95) and IsInputDisabled(0) then -- key open inventory Tab Key
 				if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and not IsPauseMenuActive() then
 					local ped = PlayerPedId()
                     if CurrentDrop ~= 0 then
