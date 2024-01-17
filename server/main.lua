@@ -478,13 +478,7 @@ RegisterNetEvent('inventory:server:UseItemSlot', function(slot)
 	if itemData then
 		local itemInfo = sharedItems[itemData.name]
 		if itemData.type == "weapon" then
-			if itemData.info.quality then
-				if itemData.info.quality > 0 then
-					TriggerClientEvent("qbr-weapons:client:UseWeapon", src, itemData)
-				end
-			else
-				TriggerClientEvent("qbr-weapons:client:UseWeapon", src, itemData)
-			end
+			TriggerClientEvent("qbr-weapons:client:UseWeapon", src, itemData)
 			TriggerClientEvent('inventory:client:ItemBox', src, itemInfo, "use")
 		elseif itemData.useable then
 			TriggerClientEvent("QBCore:Client:UseItem", src, itemData)
