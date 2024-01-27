@@ -1,4 +1,4 @@
-local Drops, Stashes, ShopItems = {}, {}, {}
+local Drops, Stashes, ShopItems, Active = {}, {}, {}, {}
 local sharedItems = exports['qbr-core']:GetItems()
 -- Functions
 
@@ -97,6 +97,7 @@ local function SaveStashItems(stashId, items)
 				['stash'] = stashId,
 				['items'] = json.encode(items)
 			})
+			Active[Stashes[stashId].isOpen] = nil
 			Stashes[stashId].isOpen = false
 		end
 	end
@@ -272,6 +273,14 @@ local function CreateNewDrop(source, fromSlot, toSlot, itemAmount)
 	end
 end
 
+AddEventHandler('playerDropped', function()
+    local src = source
+    local id = Active[src]
+    if not id or not Stashes[id] then return end
+    SaveStashItems(id, Stashes[id].items)
+    Active[src] = nil
+end)
+
 -- Events
 
 RegisterNetEvent('inventory:server:combineItem', function(item, fromItem, toItem)
@@ -377,11 +386,13 @@ RegisterNetEvent('inventory:server:OpenInventory', function(name, id, other)
 					if next(stashItems) then
 						secondInv.inventory = stashItems
 						Stashes[id] = {}
+						Active[src] = id
 						Stashes[id].items = stashItems
 						Stashes[id].isOpen = src
 						Stashes[id].label = secondInv.label
 					else
 						Stashes[id] = {}
+						Active[src] = id
 						Stashes[id].items = {}
 						Stashes[id].isOpen = src
 						Stashes[id].label = secondInv.label
@@ -478,13 +489,7 @@ RegisterNetEvent('inventory:server:UseItemSlot', function(slot)
 	if itemData then
 		local itemInfo = sharedItems[itemData.name]
 		if itemData.type == "weapon" then
-			if itemData.info.quality then
-				if itemData.info.quality > 0 then
-					TriggerClientEvent("qbr-weapons:client:UseWeapon", src, itemData)
-				end
-			else
-				TriggerClientEvent("qbr-weapons:client:UseWeapon", src, itemData)
-			end
+			TriggerClientEvent("qbr-weapons:client:UseWeapon", src, itemData)
 			TriggerClientEvent('inventory:client:ItemBox', src, itemInfo, "use")
 		elseif itemData.useable then
 			TriggerClientEvent("QBCore:Client:UseItem", src, itemData)
@@ -674,7 +679,6 @@ RegisterNetEvent('inventory:server:SetInventoryData', function(fromInventory, to
 				else
 					TriggerEvent("qbr-log:server:CreateLog", "stash", "Received Item", "green", "**".. GetPlayerName(src) .. "** (citizenid: *"..Player.PlayerData.citizenid.."* | id: *"..src.."*) received item; name: **"..fromItemData.name.."**, amount: **" .. fromAmount.. "** stash: *" .. stashId .. "*")
 				end
-				SaveStashItems(stashId, Stashes[stashId].items)
 				Player.Functions.AddItem(fromItemData.name, fromAmount, toSlot, fromItemData.info)
 			else
 				local toItemData = Stashes[stashId].items[toSlot]
@@ -938,14 +942,6 @@ exports['qbr-core']:AddCommand("giveitem", "Give An Item (Admin Only)", {{name="
 end, "admin")
 
 -- item
-
-exports['qbr-core']:CreateUseableItem("snowball", function(source, item)
-	local Player = exports['qbr-core']:GetPlayer(source)
-	local itemData = Player.Functions.GetItemBySlot(item.slot)
-	if Player.Functions.GetItemBySlot(item.slot) then
-        TriggerClientEvent("inventory:client:UseSnowball", source, itemData.amount)
-    end
-end)
 
 exports['qbr-core']:CreateUseableItem("driver_license", function(source, item)
 	local PlayerPed = GetPlayerPed(source)
