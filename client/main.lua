@@ -135,13 +135,9 @@ RegisterNetEvent('inventory:client:CheckOpenState', function(type, id, label)
     end
 end)
 
-RegisterNetEvent('inventory:client:ItemBox', function(itemData, type, amount)
-    SendNUIMessage({
-        action = "itemBox",
-        item = itemData,
-        type = type,
-        amount = amount or 1,
-    })
+RegisterNetEvent('inventory:client:ItemBox', function(idata, itype, amount)
+    local idata = type(idata) == 'string' and sharedItems[idata] or idata
+    SendNUIMessage({action = "itemBox", item = idata, type = itype, amount = amount or 1})
 end)
 
 AddEventHandler('inventory:client:requiredItems', function(items)
@@ -368,31 +364,31 @@ CreateThread(function()
         DisableControlAction(0, 0x26E9DC00)
         DisableControlAction(0, 0xAC4BD4F1) -- Disable Weapon Wheel and Item Wheel
         DisableControlAction(0, 0xB238FE0B) -- Disable Quick Select for Weapons
-        if IsDisabledControlPressed(0, 0xE6F612E4) and IsInputDisabled(0) then  -- 1  slot
+        if IsDisabledControlPressed(0, 0xE6F612E4) and IsInputDisabled(0) and PlayerData.items[1] then  -- 1  slot
 			if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
 				TriggerServerEvent("inventory:server:UseItemSlot", 1)
 			end
         end
 
-        if IsDisabledControlPressed(0, 0x1CE6D9EB) and IsInputDisabled(0) then  -- 2 slot
+        if IsDisabledControlPressed(0, 0x1CE6D9EB) and IsInputDisabled(0) and PlayerData.items[2] then  -- 2 slot
 			if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
 				TriggerServerEvent("inventory:server:UseItemSlot", 2)
 			end
         end
 
-        if IsDisabledControlPressed(0, 0x4F49CC4C) and IsInputDisabled(0) then -- 3 slot
+        if IsDisabledControlPressed(0, 0x4F49CC4C) and IsInputDisabled(0) and PlayerData.items[3] then -- 3 slot
 			if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
 				TriggerServerEvent("inventory:server:UseItemSlot", 3)
 			end
         end
 
-        if IsDisabledControlPressed(0, 0x8F9F9E58) and IsInputDisabled(0) then  -- 4 slot
+        if IsDisabledControlPressed(0, 0x8F9F9E58) and IsInputDisabled(0) and PlayerData.items[4] then  -- 4 slot
 			if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
 				TriggerServerEvent("inventory:server:UseItemSlot", 4)
 			end
         end
 
-        if IsDisabledControlPressed(0, 0xAB62E997) and IsInputDisabled(0) then -- 5 slot
+        if IsDisabledControlPressed(0, 0xAB62E997) and IsInputDisabled(0) and PlayerData.items[5] then -- 5 slot
 			if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] then
 				TriggerServerEvent("inventory:server:UseItemSlot", 5)
 			end
